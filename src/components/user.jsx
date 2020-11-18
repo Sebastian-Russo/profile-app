@@ -2,15 +2,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class User extends Component {
+  constructor(props) {
+    super(props)
+      this.state = {
+      editNameClicked: false
+    }
+  }
 
   handleClick = () => {
-    this.props.editName(this.props.user.id)
+    this.setState({ editNameClicked: !this.state.editNameClicked })
+    // console.log(this.state)
+
+    // have input appear for user to submit name, when user clicks 'edit name'
+    // have form component appear when user clicks 'edit name'
+
+    // this.props.editName(this.props.user.id)
   }
 
   render() { 
-    console.log(this.props)
+    // console.log(this.props)
     const { name, picture,id } = this.props.user; 
-
+    
     return ( 
       <div key={id}>
         <h3>{name}</h3>
@@ -24,7 +36,7 @@ class User extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user.user
   }
 }
 

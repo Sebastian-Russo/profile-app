@@ -7,7 +7,7 @@ const initState = {
   
 }
 
-const rootReducer = (state=initState, action) => {
+const userReducer = (state=initState, action) => {
   if (action.type === 'EDIT_NAME') {
     console.log('edit name')
     let newName = "add user input"
@@ -17,4 +17,4 @@ const rootReducer = (state=initState, action) => {
   return state;
 }
 
-export default rootReducer;
+export default userReducer;
