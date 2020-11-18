@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class User extends Component {
-  state = {  }
+
+  handleClick = () => {
+    this.props.editName(this.props.user.id)
+  }
+
   render() { 
+    console.log(this.props)
+    const { name, picture,id } = this.props.user; 
+
     return ( 
-      <div>
-        <h3>Name</h3>
-        <h4>nickname</h4>
-        <div>profile picture</div>
-        <div>bio about the user</div>
-        <div></div>
+      <div key={id}>
+        <h3>{name}</h3>
+        <button onClick={() => this.handleClick(id)}>Edit Name</button>
+        <div>{picture}</div>
       </div>
       
-     );
+    );
   }
 }
- 
-export default User;
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    editName: (id) => { dispatch({ type: 'EDIT_NAME', id: id }) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)
