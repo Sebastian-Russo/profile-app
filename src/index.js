@@ -4,10 +4,9 @@ import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import {store} from './store';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers/user';
-
+// import { createStore } from 'redux';
+// import rootReducer from './reducers/user';
 // const store = createStore(rootReducer);
 
 ReactDOM.render(

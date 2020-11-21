@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
+import { editName } from '../actions/user-action';
 
 class User extends Component {
   constructor(props) {
@@ -11,25 +13,27 @@ class User extends Component {
   }
 
   submit = values => {
-    console.log(values)
+    this.props.editName(values)
   }
 
+  // make form input appear/disappear 
   handleClick = () => {
     this.setState({ editNameClicked: !this.state.editNameClicked })
     console.log(this.state)
-    // have input appear for user to submit name, when user clicks 'edit name'
-    // have form component appear when user clicks 'edit name'
-    // this.props.editName(this.props.user.id)
   }
 
   render() { 
-    // console.log(this.props)
-    const { name, picture,id } = this.props.user; 
+    const { name, picture, id } = this.props.user; 
     
+    let changeName;
+    if (this.state.editNameClicked) {
+      changeName = <UserForm onSubmit={this.submit} />
+    }
+
     return ( 
       <div key={id}>
         <h3>{name}</h3>
-        <UserForm onSubmit={this.submit} />
+        {changeName}
         <button onClick={() => this.handleClick(id)}>Edit Name</button>
         <div>{picture}</div>
       </div>
@@ -40,14 +44,12 @@ class User extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.user
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    editName: (id) => { dispatch({ type: 'EDIT_NAME', id: id }) }
-  }
+  return bindActionCreators({ editName: editName }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -2,12 +2,13 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 let UserForm = props => {
+
   const { handleSubmit } = props;
   return ( 
     <form onSubmit={handleSubmit}>
 
       <Field 
-        name="inputName"
+        name="name"
         component="input"
         type="text"
       />
