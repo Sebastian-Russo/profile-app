@@ -18,8 +18,6 @@ router.post('/', (req, res) => {
           imageId: req.file.key,
           imageUrl: req.file.location
         })
-        // const imageId = req.file.key;
-        // const imageUrl = req.file.location;
       // Save the file name into database into profile model
         res.status(200).json({
           imageProfile
