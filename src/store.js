@@ -1,10 +1,11 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {reducer as formReducer} from 'redux-form';
-import userReducer from './reducers/user-reducer';
+import thunk from 'redux-thunk';
+import profileReducer from './reducers/profile-reducer';
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  user: profileReducer,
   form: formReducer
 })
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer,applyMiddleware(thunk));

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateImageState } from '../actions/image-action';
+import { editName } from '../actions/name-action';
 import { API_BASE_URL } from "../config";
 
 class UploadIMage extends Component {
@@ -32,16 +36,18 @@ class UploadIMage extends Component {
           if (200 === res.status) {
             if ( res.data.error ) {
               if ('LIMIT_FILE_SIZE' === res.data.errer.code) {
-                alert('Max size: 2MB', 'red')
+                alert('Max size: 2MB')
               } else {
                 console.log(res.data);
-                alert(res.data.error, 'red')
+                alert(res.data.error)
               }
             } else {
               // Success
               let fileName = res.data;
-              console.log('file data', fileName);
-              alert('File Uploaded', '#3089cf');
+              // SEND TO STATE 
+              updateImageState(fileName)
+              editName("TEST")
+              alert('File Uploaded');
             }
           }
         })
@@ -77,5 +83,12 @@ class UploadIMage extends Component {
      );
   }
 }
- 
-export default UploadIMage;
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+      updateImageState,
+      editName
+  }, dispatch)
+}
+
+export default connect(mapDispatchToProps)(UploadIMage);

@@ -2,21 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
-import { editName } from '../actions/user-action';
+import { postNameRequest, updateNameRequest } from '../actions/name-action';
 import UploadImage from './upload-image';
+
 
 class User extends Component {
   constructor(props) {
     super(props)
       this.state = {
       editNameClicked: false,
-      editImageClicked: false
+      editImageClicked: false,
+      image: ""
     }
   }
 
   // Input form for name 
-  submit = values => {
-    this.props.editName(values)
+  submit = value => {
+    if (this.props.user.name === "Please enter your nickname") {
+        this.props.postNameRequest(value)
+    } else {
+        const {name} = value;
+        this.props.user.name = name; 
+        this.props.updateNameRequest(this.props.user)
+    }
   }
 
   // Make form input appear/disappear 
@@ -31,8 +39,9 @@ class User extends Component {
 
 
   render() { 
+    console.log(this.props)
     const { name, id } = this.props.user; 
-  
+    
     let changeName;
     if (this.state.editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
@@ -59,12 +68,16 @@ class User extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    image: state.image
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ editName: editName }, dispatch)
+  return bindActionCreators({
+     postNameRequest,
+     updateNameRequest
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);
