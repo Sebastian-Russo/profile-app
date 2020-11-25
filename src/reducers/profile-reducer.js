@@ -11,11 +11,12 @@ import {
 } from '../actions/image-action';
 
 const initState = {
-    id: '1', 
+    id: '', 
     name: "Please enter your nickname", 
-    image: {
+    imageProfile: {
       imageId: "",
-      imageUrl: ""
+      imageUrl: "",
+      id: ''
     },
     error: null
 }
@@ -49,23 +50,22 @@ const profileReducer = (state=initState, action) => {
   }
 
   if (action.type === UPDATE_IMAGE_STATE) {
-    console.log('update image state', action)
     return Object.assign({}, state, { 
-      image: { 
-        imageId: action.imageData.imageId,
-        imageUrl: action.imageData.imageUrl
+      imageProfile: { 
+        imageId: action.imageData.imageProfile.imageId,
+        imageUrl: action.imageData.imageProfile.imageUrl,
+        id: action.imageData.imageProfile._id
       } 
     })
   }
 
   if (action.type === UPDATE_IMAGE_SUCCESS) {
-    console.log('update image success')
     return Object.assign({}, state, {
-      image: { 
-        imageId: action.imageData.imageId,
-        imageUrl: action.imageData.imageUrl
-      }, 
-      id: action.user._id,
+      imageProfile: { 
+        imageId: action.imageData.imageProfile.imageId,
+        imageUrl: action.imageData.imageProfile.imageUrl,
+        id: action.imageData.imageProfile._id
+      }
     })
   }
   if (action.type === UPDATE_IMAGE_ERROR) {

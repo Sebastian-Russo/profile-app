@@ -30,9 +30,8 @@ export const updateImageError = error => {
 }
 
 export const updateImageRequest = user => {
-  console.log('UPDATE IMAGE REQUEST', user)
   return(dispatch) => {
-    return axios.put(`${API_BASE_URL}/user`, user)
+    return axios.put(`${API_BASE_URL}/user/image/${user.id}`, user)
       .then((res) => {
         dispatch(updateImageSuccess(res.data));
       })
@@ -42,6 +41,7 @@ export const updateImageRequest = user => {
   }
 }
 
+// Plan to expand and create user sign in, would need GET req
 // ******* GET IMAGE ******** 
 
 // export const FETCH_IMAGE_SUCCESS = "FETCH_IMAGE_SUCCESS";
@@ -72,39 +72,34 @@ export const updateImageRequest = user => {
 //   }
 // }
 
-
 // ******* POST IMAGE ******** 
 
-export const POST_IMAGE_SUCCESS = "POST_IMAGE_SUCCESS";
-export const postImageSuccess = user => {
-  return {
-    type: POST_IMAGE_SUCCESS,
-    user
-  }
-}
+// export const POST_IMAGE_SUCCESS = "POST_IMAGE_SUCCESS";
+// export const postImageSuccess = user => {
+//   return {
+//     type: POST_IMAGE_SUCCESS,
+//     user
+//   }
+// }
 
-export const POST_IMAGE_ERROR = "POST_IMAGE_ERROR";
-export const postImageError = error => {
-  return {
-    type: POST_IMAGE_ERROR,
-    error
-  }
-}
+// export const POST_IMAGE_ERROR = "POST_IMAGE_ERROR";
+// export const postImageError = error => {
+//   return {
+//     type: POST_IMAGE_ERROR,
+//     error
+//   }
+// }
 
-export const postImageRequest = user => {
-  return(dispatch) => {
-    return axios.post(`${API_BASE_URL}/user/image`, user)
-      .then((res) => {
-        dispatch(postImageSuccess(res.data));
-      })
-      .catch(err => {
-        dispatch(postImageError(err))
-      });
-  }
-}
-
-
-
-
+// export const postImageRequest = user => {
+//   return(dispatch) => {
+//     return axios.post(`${API_BASE_URL}/user/image`, user)
+//       .then((res) => {
+//         dispatch(postImageSuccess(res.data));
+//       })
+//       .catch(err => {
+//         dispatch(postImageError(err))
+//       });
+//   }
+// }
 
 
