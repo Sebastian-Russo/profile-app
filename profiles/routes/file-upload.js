@@ -1,10 +1,26 @@
 require('dotenv').config(); 
 const express = require('express');
 const router = express.Router();
-
+const ProfileSchema = require('../models/post');
 const upload = require('../../services/file-upload')
 
 const singleUpload = upload.single('image');
+
+// router.put('/:id', async (req, res) => {
+//   try {
+//     const updateProfile = await ProfileSchema.updateOne(
+//       {_id: req.params.id },
+//       { $set: {
+//         imageId: req.body.imageId,
+//         imageUrl: req.body.imageUrl
+//       }
+//       });
+//       res.status(200).json(updateProfile)
+//   } catch(err) {
+//     console.log(err)
+//     res.status(500).json({ message: err })
+//   }
+// })
 
 router.post('/', (req, res) => {
   singleUpload(req, res, (err) => {
@@ -16,13 +32,12 @@ router.post('/', (req, res) => {
         console.log('Error: No File Selected!')
       } else {
         // Success
-        const imageName = req.file.key;
-        const imageLocation = req.file.location;
+        const imageId = req.file.key;
+        const imageUrl = req.file.location;
       // Save the file name into database into profile model
         res.json({
-          'imageUrl': req.file.location, 
-          image: imageName,
-          location: imageLocation
+          imageUrl, 
+          imageId
         });
       }
     }

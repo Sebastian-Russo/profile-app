@@ -1,11 +1,9 @@
 const express = require('express');
-// const Joi = require('joi');
 const bodyParser = require('body-parser');
 const validateUser = require('../validator');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 const ProfileSchema = require('../models/post');
-const { updateOne } = require('../models/post');
 
 
 router.put('/:id', jsonParser, async (req, res) => {
@@ -13,7 +11,6 @@ router.put('/:id', jsonParser, async (req, res) => {
       const updatedProfile = await ProfileSchema.updateOne(
         { _id: req.params.id }, 
         { $set: { name: req.body.name },
-        // { $set: { image: req.body.image } 
         });
       res.status(200).json(updatedProfile)
     } catch(err) {
