@@ -8,6 +8,7 @@ const { router: postRouter } = require('./profiles/routes/post');
 const { router: putRouter } = require('./profiles/routes/put');
 const { router: deleteRouter } = require('./profiles/routes/delete');
 const fileRoutes = require('./profiles/routes/file-upload')
+const { PORT, DATABASE_URL } = require('./config');
 
 
 // Middleware 
@@ -39,13 +40,10 @@ app.use((req, res, next) => {
 
 // Connect to DB 
 mongoose.connect(
-  process.env.DATABASE_URL, 
+  DATABASE_URL, 
   { useUnifiedTopology: true },
   () => {
   console.log('connected to DB!')
 })
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

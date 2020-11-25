@@ -12,7 +12,7 @@ router.post('/', jsonParser, async (req, res) => {
       res.status(400).send(error.details[0].message);
       return; 
     }
-
+    console.log(req.body)
     const userProfile = new ProfileSchema({
       name: req.body.name
     });
@@ -22,6 +22,7 @@ router.post('/', jsonParser, async (req, res) => {
       res.status(200).json(savedProfile)
     } catch(err) {
         res.status(500).json({ message: err })
+        console.log("ERROR HERE", err)
     }
 })
 

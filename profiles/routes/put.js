@@ -12,10 +12,12 @@ router.put('/:id', jsonParser, async (req, res) => {
     try {
       const updatedProfile = await ProfileSchema.updateOne(
         { _id: req.params.id }, 
-        { $set: { name: req.body.name } 
-      });
+        { $set: { name: req.body.name },
+        // { $set: { image: req.body.image } 
+        });
       res.status(200).json(updatedProfile)
     } catch(err) {
+      console.log(err)
       res.status(500).json({ message: err })
     }
 

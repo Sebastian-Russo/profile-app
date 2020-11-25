@@ -6,10 +6,16 @@ const ProfileSchema = new Schema({
       type: String,
       required: true
     },
-    // imgge: {
-    //   type: File,
-    //   required: true
-    // }
+    image: {
+        image: {
+          type: String,
+          default: "empty"
+        },
+        imageUrl: {
+          type: String,
+          default: "empty"
+        }
+    }
 })
 
 module.exports = mongoose.model('Profile', ProfileSchema);
