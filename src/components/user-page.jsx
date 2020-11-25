@@ -3,7 +3,7 @@ import User from './user';
 
 const UserPage = () => {
   return ( 
-  <div>
+  <div className="container">
     <h1>Welcome to BookFace </h1>
     <User />
   </div> );

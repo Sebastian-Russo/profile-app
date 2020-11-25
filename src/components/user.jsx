@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
 import { postNameRequest, updateNameRequest } from '../actions/name-action';
+import { updateImageRequest } from '../actions/image-action';
 import UploadImage from './upload-image';
 
 
@@ -11,8 +12,7 @@ class User extends Component {
     super(props)
       this.state = {
       editNameClicked: false,
-      editImageClicked: false,
-      image: ""
+      editImageClicked: false  
     }
   }
 
@@ -37,10 +37,13 @@ class User extends Component {
     this.setState({ editImageClicked: !this.state.editImageClicked })
   }
 
+  handleSaveClick = () => {
+    this.props.updateNameRequest(this.props.user)
+  }
 
   render() { 
     console.log(this.props)
-    const { name, id } = this.props.user; 
+    const { name, id, image } = this.props.user; 
     
     let changeName;
     if (this.state.editNameClicked) {
@@ -55,12 +58,23 @@ class User extends Component {
       <div key={id} className="container">
         <h3>{name}</h3>
         {changeName}
-        <button onClick={() => this.handleNameClick(id)}>Edit Name</button>
-        <div>
-            <img src="" alt="profile picture" />
+        <button 
+            className="btn btn-secondary" 
+            onClick={() => this.handleNameClick(id)}
+            >Add/Edit Name</button>
+        <div width="50%" height="50%" >
+            <img src={image.imageUrl} alt="profile" width="300px"/>
         </div>
-        <button onClick={() => this.handleImageClick()}>Edit Picture</button>
+        <button 
+            className="btn btn-secondary" 
+            onClick={() => this.handleImageClick()}
+            >Add/Edit Picture</button>
         {changeImage}
+        <button
+          className="btn btn-secondary"
+          onClick={() => this.handleSaveClick()}
+        >Save Changes 
+        </button>
       </div> 
     );
   }
@@ -68,15 +82,15 @@ class User extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    image: state.image
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
      postNameRequest,
-     updateNameRequest
+     updateNameRequest,
+     updateImageRequest
   }, dispatch)
 }
 
