@@ -18,7 +18,7 @@ app.use('/api/user', getRouter);
 app.use('/api/user', postRouter);
 app.use('/api/user', putRouter);
 app.use('/api/user', deleteRouter);
-app.use('/api/user', fileRoutes);
+app.use('/api/user/image', fileRoutes);
 app.use(express.json());
 app.use(express.static('public')); // serves files from public folder
 
