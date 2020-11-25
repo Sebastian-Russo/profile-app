@@ -93,7 +93,7 @@ export const postImageError = error => {
 
 export const postImageRequest = user => {
   return(dispatch) => {
-    return axios.post(`${API_BASE_URL}/user`, user)
+    return axios.post(`${API_BASE_URL}/user/image`, user)
       .then((res) => {
         dispatch(postImageSuccess(res.data));
       })
