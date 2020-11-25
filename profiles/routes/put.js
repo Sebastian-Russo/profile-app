@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const validateUser = require('../validator');
 const router = express.Router();
 const jsonParser = bodyParser.json();
-const ProfileSchema = require('../models/post');
+const ProfileSchema = require('../models/name');
 
 
 router.put('/:id', jsonParser, async (req, res) => {

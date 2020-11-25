@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ProfileSchema = require('../models/post');
+const ProfileSchema = require('../models/name');
 
 
 router.delete('/:id', async (req, res) => {
