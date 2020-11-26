@@ -2,7 +2,7 @@
       import Axios from 'axios';
       import { connect } from 'react-redux';
       import { bindActionCreators } from 'redux';
-      import { updateImageState } from '../actions/image-action';
+      import { updateImageState, postImageRequest, updateImageRequest } from '../actions/image-action';
       import { API_BASE_URL } from "../config";
 
       class UploadIMage extends Component {
@@ -60,7 +60,7 @@
         }
 
         render() { 
-
+          console.log('uploader', this.props)
           return ( 
 
             <div>
@@ -85,13 +85,15 @@
 
       const mapStateToProps = state => {
         return {
-          
+          image: state.image
         }
       }
 
       const mapDispatchToProps = dispatch => {
         return bindActionCreators({
-            updateImageState
+            updateImageState,
+            postImageRequest,
+            updateImageRequest
         }, dispatch)
       }
 

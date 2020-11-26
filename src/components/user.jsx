@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
 import { postNameRequest, updateNameRequest } from '../actions/name-action';
-import { updateImageRequest } from '../actions/image-action';
 import UploadImage from './upload-image';
 
 
@@ -12,7 +11,7 @@ class User extends Component {
     super(props)
       this.state = {
       editNameClicked: false,
-      editImageClicked: false  
+      editImageClicked: false
     }
   }
 
@@ -37,6 +36,17 @@ class User extends Component {
     this.setState({ editImageClicked: !this.state.editImageClicked })
   }
 
+  handleSaveClick = () => {
+    console.log('SAVE CLICKER',this.props.image)
+    if (this.props.image.id.length === 0) {
+      console.log('clicked')
+      this.props.postImageRequest(this.props.image)
+    } 
+    else if (this.props.image.id.length) {
+      this.props.updateImageRequest(this.props.image)
+    }
+  }
+
   render() { 
     const { name, id,  } = this.props.user; 
     console.log(this.props)
@@ -59,7 +69,7 @@ class User extends Component {
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
         <div width="50%" height="50%" >
-            <img src="" alt="profile" width="300px"/>
+            <img src={this.props.image.imageUrl} alt="profile" width="300px"/>
         </div>
         <button 
             className="btn btn-secondary" 
@@ -81,8 +91,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
      postNameRequest,
-     updateNameRequest,
-     updateImageRequest
+     updateNameRequest
   }, dispatch)
 }
 

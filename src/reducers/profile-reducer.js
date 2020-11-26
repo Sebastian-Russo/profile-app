@@ -11,7 +11,7 @@ import {
 // } from '../actions/image-action';
 
 const initState = {
-    id: '', 
+    id: null, 
     name: "Please enter your nickname", 
     // imageProfile: {
     //   imageId: "",

@@ -1,9 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from '../config';
 
-
-// ******* UPDATE IMAGE ******** 
-
+// ********* UPATE STATE ********** 
 export const UPDATE_IMAGE_STATE = "UPDATE_IMAGE_STATE";
 export const updateImageState = imageData => {
   console.log('update image state action', imageData)
@@ -13,11 +11,44 @@ export const updateImageState = imageData => {
   }
 }
 
+// ******* POST IMAGE ******** 
+
+export const POST_IMAGE_SUCCESS = "POST_IMAGE_SUCCESS";
+export const postImageSuccess = imageData => {
+  return {
+    type: POST_IMAGE_SUCCESS,
+    imageData
+  }
+}
+
+export const POST_IMAGE_ERROR = "POST_IMAGE_ERROR";
+export const postImageError = error => {
+  return {
+    type: POST_IMAGE_ERROR,
+    error
+  }
+}
+
+export const postImageRequest = imageData => {
+  console.log('post image request', imageData)
+  return(dispatch) => {
+    return axios.post(`${API_BASE_URL}/user/image`, imageData)
+      .then((res) => {
+        dispatch(postImageSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(postImageError(err))
+      });
+  }
+}
+
+// ******* UPDATE IMAGE ******** 
+
 export const UPDATE_IMAGE_SUCCESS = "UPDATE_IMAGE_SUCCESS";
-export const updateImageSuccess = user => {
+export const updateImageSuccess = imageData => {
   return {
     type: UPDATE_IMAGE_SUCCESS,
-    user
+    imageData
   }
 }
 
@@ -29,9 +60,9 @@ export const updateImageError = error => {
   }
 }
 
-export const updateImageRequest = user => {
+export const updateImageRequest = imageData => {
   return(dispatch) => {
-    return axios.put(`${API_BASE_URL}/user/image/${user.id}`, user)
+    return axios.put(`${API_BASE_URL}/user/image/${imageData.id}`, imageData)
       .then((res) => {
         dispatch(updateImageSuccess(res.data));
       })
@@ -72,34 +103,6 @@ export const updateImageRequest = user => {
 //   }
 // }
 
-// ******* POST IMAGE ******** 
 
-// export const POST_IMAGE_SUCCESS = "POST_IMAGE_SUCCESS";
-// export const postImageSuccess = user => {
-//   return {
-//     type: POST_IMAGE_SUCCESS,
-//     user
-//   }
-// }
-
-// export const POST_IMAGE_ERROR = "POST_IMAGE_ERROR";
-// export const postImageError = error => {
-//   return {
-//     type: POST_IMAGE_ERROR,
-//     error
-//   }
-// }
-
-// export const postImageRequest = user => {
-//   return(dispatch) => {
-//     return axios.post(`${API_BASE_URL}/user/image`, user)
-//       .then((res) => {
-//         dispatch(postImageSuccess(res.data));
-//       })
-//       .catch(err => {
-//         dispatch(postImageError(err))
-//       });
-//   }
-// }
 
 
