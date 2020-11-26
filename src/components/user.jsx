@@ -38,8 +38,9 @@ class User extends Component {
   }
 
   render() { 
-    const { name, id, imageProfile } = this.props.user; 
-    
+    const { name, id,  } = this.props.user; 
+    console.log(this.props)
+
     let changeName;
     if (this.state.editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
@@ -58,7 +59,7 @@ class User extends Component {
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
         <div width="50%" height="50%" >
-            <img src={imageProfile.imageUrl} alt="profile" width="300px"/>
+            <img src="" alt="profile" width="300px"/>
         </div>
         <button 
             className="btn btn-secondary" 
@@ -72,7 +73,8 @@ class User extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    image: state.image
   }
 }
 
