@@ -1,10 +1,13 @@
 require('dotenv').config(); 
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
+const jsonParser = bodyParser.json();
 const ImageSchema = require('../models/image');
-const upload = require('../../services/file-upload')
+const upload = require('../../services/file-upload');
 
 router.post('/', (req, res) => {
+  console.log('POST REQ', req.body)
   singleUpload(req, res, (err) => {
     if (err) {
       console.log('errors', error)
@@ -29,21 +32,23 @@ router.post('/', (req, res) => {
 
 const singleUpload = upload.single('image');
 
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const updateProfile = await ProfileSchema.updateOne(
-//       {_id: req.params.id },
-//       { $set: {
-//         imageId: req.body.imageId,
-//         imageUrl: req.body.imageUrl
-//       }
-//       });
-//       res.status(200).json(updateProfile)
-//   } catch(err) {
-//     console.log(err)
-//     res.status(500).json({ message: err })
-//   }
-// })
+router.put('/:id', jsonParser, async (req, res) => {
+  console.log('PUT REQ', req.body)
+  try {
+    const updateImage = await ImageSchema.updateOne(
+      {_id: req.params.id },
+      { $set: {
+        imageId: req.body.imageId,
+        imageUrl: req.body.imageUrl
+      }
+      });
+      console.log(updateImage)
+      res.status(200).json(updateImage)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json({ message: err })
+  }
+})
 
 
 module.exports = router; 
