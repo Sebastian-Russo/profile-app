@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
   console.log('POST REQ', req.body)
   singleUpload(req, res, (err) => {
     if (err) {
-      console.log('errors', error)
+      console.log('errors', err)
       return res.status(422).send({errors: [{title: 'File Upload Error', details: err.message}]})
     } else {
       if (req.file === undefined) {
