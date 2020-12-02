@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
       });
     }
   
-    const stringFields = ['username', 'password', 'firstName', 'lastName'];
+    const stringFields = ['username', 'password', 'email'];
     const nonStringField = stringFields.find(
       field => field in req.body && typeof req.body[field] !== 'string'
     );
@@ -82,12 +82,11 @@ router.post('/', (req, res) => {
       });
     }
   
-    let {username, password, firstName = '', lastName = ''} = req.body;
+    let {username, password, email = ''} = req.body;
     // Username and password come in pre-trimmed, otherwise we throw an error
     // before this
-    firstName = firstName.trim();
-    lastName = lastName.trim();
-  
+    email = email.trim();
+    
     return User.find({username})
       .countDocuments()
       .then(count => {
@@ -107,11 +106,11 @@ router.post('/', (req, res) => {
         return User.create({
           username,
           password: hash,
-          firstName,
-          lastName
+          email
         });
       })
       .then(user => {
+        console.log(user)
         return res.status(201).json(user.serialize());
       })
       .catch(err => {
