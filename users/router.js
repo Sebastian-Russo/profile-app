@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
 
-    const requiredFields = ['username', 'password'];
+    const requiredFields = ['username', 'password', 'email'];
     const missingField = requiredFields.find(field => !(field in req.body));
   
     if (missingField) {
@@ -53,8 +53,6 @@ router.post('/', (req, res) => {
       },
       password: {
         min: 10,
-        // bcrypt truncates after 72 characters, so let's not give the illusion
-        // of security by storing extra (unused) info
         max: 72
       }
     };
@@ -117,9 +115,10 @@ router.post('/', (req, res) => {
         // Forward validation errors on to the client, otherwise give a 500
         // error because something unexpected has happened
         if (err.reason === 'ValidationError') {
-          return res.status(err.code).json(err);
+          console.error(err)
+          return res.status(err.code).send(err);
         }
-        res.status(500).json({code: 500, message: err.message });
+        return res.status(500).json({code: 500, message: err.message });
       });
 });
 

@@ -1,14 +1,16 @@
 'use strict';
+require('dotenv').config(); 
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-
 const config = require('../config');
+
 const router = express.Router();
 
 const createAuthToken = function(user) {
-  return jwt.sign({user}, config.JWT_SECRET, {
+  console.log(user)
+  return jwt.sign({user}, process.env.JWT_SECRET, {
     subject: user.username,
     expiresIn: config.JWT_EXPIRY,
     algorithm: 'HS256'

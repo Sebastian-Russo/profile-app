@@ -1,4 +1,4 @@
-// import {SubmissionError} from 'redux-form';
+import {SubmissionError} from 'redux-form';
 import { login } from './auth';
 import { normalizeResponseErrors } from './utils';
 import { API_BASE_URL } from '../config';
