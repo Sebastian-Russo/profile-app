@@ -10,6 +10,8 @@ npm i jwt-decode
 cd client
 npm i bcryptjs passport passport-local passport-jwt jsonwebtoken axios bootstrap config jquery node-modules react react-bootstrap react-dom react-scripts redux redux-form redux-thunk web-vitals 
 npm install --save prop-types
+npm i react-router-dom
+npm i jwt-decode
 cd ..
 
 npm start

@@ -1,16 +1,27 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import User from './user';
-import LoginForm from './login-form';
 import SignupPage from './signup-page';
-import './App.css';
 
 function App() {
   return (
-    <div className="container">
-      <h1>Welcome to BookFace </h1>
-      <LoginForm />
-      <SignupPage />
-      <User />
-    </div>
+    <Router>
+        <div className="container">
+        <h1>Welcome to BookFace </h1>
+            <Switch>
+                <Route
+                    exact
+                    path="/login"
+                    component={SignupPage}
+                />
+                <Route 
+                    exact
+                    path="/user"
+                    component={User}
+                />
+            </Switch>
+        </div>
+    </Router>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm, focus } from 'redux-form';
-// import {Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Input from './input';
 import {login} from '../actions/auth';
 import {required, nonEmpty} from '../validators';
@@ -15,7 +15,7 @@ export class LoginForm extends React.Component {
 
         if(this.props.submitSucceeded) {
           console.log('submit succeeded!')
-          // return <Redirect to='' />
+          return <Redirect to='user' />
         }
 
         if (this.props.error){
@@ -47,7 +47,8 @@ export class LoginForm extends React.Component {
                     component={Input}
                     validate={[required, nonEmpty]}
                 />
-                <button disabled={this.props.pristine || this.props.submitting}>
+                <button disabled={this.props.pristine || this.props.submitting}
+                    className="btn btn-secondary btn-lrg m-2">
                     Log in
                 </button>
             </form>

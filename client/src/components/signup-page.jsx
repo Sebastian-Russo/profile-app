@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import SignupForm from './signup-form';
 import { userSignupRequest } from '../actions/signup-action';
+import LoginForm from './login-form';
 
 class SignupPage extends Component {
   render() { 
@@ -12,6 +13,7 @@ class SignupPage extends Component {
       <div className="row">
         <div className="col-md-4 col-md-offset">
           <SignupForm userSignupRequest={userSignupRequest} />
+          <LoginForm />
         </div>
       </div>
      );
