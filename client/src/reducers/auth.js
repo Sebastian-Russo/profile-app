@@ -7,11 +7,12 @@ import {
 } from "../actions/auth";
 
 const initialState = {
-  id: null, //the user obj response from server
+  id: null, 
   error: null,
   loading: false,
   username: "",
-  authToken: null, // authToken !== null does not mean it has been validated
+  authToken: null, 
+  userProfile: null
 };
 
 export default function authReducer(state = initialState, action) {

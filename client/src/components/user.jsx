@@ -47,9 +47,11 @@ class User extends Component {
     }
   }
 
+  // takes props from auth and create a visual user profile
   render() { 
-    const { name, id,  } = this.props.user; 
     console.log(this.props)
+
+    const { name, id,  } = this.props.user; 
 
     let changeName;
     if (this.state.editNameClicked) {
@@ -84,7 +86,8 @@ class User extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    image: state.image
+    image: state.image,
+    auth: state.auth
   }
 }
 

@@ -102,9 +102,6 @@ export const refreshAuthToken = () => (dispatch, getState) => {
 };
 
 export const logOut = () => async (dispatch) => {
-  dispatch(
-    // updateUserLists()
-    );
   dispatch(clearAuth());
   clearAuthToken();
 };
