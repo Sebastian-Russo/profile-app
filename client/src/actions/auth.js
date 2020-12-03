@@ -42,7 +42,6 @@ export const addFromUserProfile = (nickName, profileImage) => ({
 
 const storeAuthInfo = (authToken, dispatch) => {
   const { user } = jwtDecode(authToken);
-  console.log(user);
   dispatch(authSuccess(authToken, user)); // authSuccess(authToken, decodedToken.user)
   dispatch(addFromUserProfile(user.nickName, user.profileImage));
   saveAuthToken(authToken, user);
@@ -63,7 +62,6 @@ export const login = (username, password) => (dispatch) => {
     .then((res) => normalizeResponseErrors(res))
     .then((res) => res.json())
     .then(({ authToken }) => {
-      console.log(authToken);
       return storeAuthInfo(authToken, dispatch);
     })
     .catch((err) => {
@@ -73,7 +71,7 @@ export const login = (username, password) => (dispatch) => {
         code === 401
           ? "Incorrect username or password"
           : "Unable to login, please try again";
-      // dispatch(authError(err));
+      dispatch(authError(err));
       return Promise.reject(
         new SubmissionError({
           _error: message,

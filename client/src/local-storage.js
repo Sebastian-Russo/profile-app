@@ -1,18 +1,18 @@
 export const loadAuthToken = () => {
   const user = localStorage.getItem('user');
   console.log('getting user')
-  return JSON.parse(user) //  returns { authToken: <whatever the token is>, userId: <whatever the userId is> }
+  return JSON.parse(user) //  returns { authToken: <token>, userId: <id> }
 };
 
-export const saveAuthToken = (authToken, { id, username, groceryList, categoryList}) => {
+export const saveAuthToken = (authToken, { id, username, nickName, profileImage }) => {
   try {
-      console.log('storing in local storage') // authToken, userId, username, groceryList
+      console.log('storing in local storage') // authToken, userId, username, nick name, profile image
       localStorage.setItem('user', JSON.stringify({
         authToken,
         id,
         username,
-        groceryList,
-        categoryList
+        nickName, 
+        profileImage
       }));
   } catch (e) {}
 };
@@ -28,17 +28,17 @@ try {
 }
 }
 
-export const addToList = (list, item) => {
-try {
-  const userJSON = localStorage.getItem('user');
-  const userObj = JSON.parse(userJSON);
-  localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
-    [list]: [...userObj[list], item]
-  })));
-} catch (e) {
-  console.error('error updating user in storage', e);
-}
-}
+// export const addToList = (list, item) => {
+// try {
+//   const userJSON = localStorage.getItem('user');
+//   const userObj = JSON.parse(userJSON);
+//   localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
+//     [list]: [...userObj[list], item]
+//   })));
+// } catch (e) {
+//   console.error('error updating user in storage', e);
+// }
+// }
 
 export const clearAuthToken = () => {
   try {
