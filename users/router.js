@@ -4,8 +4,8 @@ const { User } = require('./models');
 const { jwtAuth } = require('../auth');
 const router = express.Router();
 
-
 router.post('/', (req, res) => {
+
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
   
@@ -122,7 +122,6 @@ router.post('/', (req, res) => {
         res.status(500).json({code: 500, message: err.message });
       });
 });
-
 
 
 

@@ -8,8 +8,7 @@ class SignupForm extends Component {
     this.state = {
       username: '',
       email: '',
-      password: '',
-      passwordConfirmation: ''
+      password: ''
     }
   }
 
@@ -20,6 +19,7 @@ class SignupForm extends Component {
   onSubmit = e => {
     e.preventDefault();
     console.log(this.state)
+
     this.props.userSignupRequest(this.state);
   }
 
