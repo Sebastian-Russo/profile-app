@@ -47,12 +47,17 @@ class User extends Component {
     }
   }
 
-  // takes props from auth and create a visual user profile
   render() { 
-    console.log(this.props)
+
+    const { auth } = this.props;
+    // console.log(auth)
+    const userProfile = (
+      <div>
+        <h3>Username: {auth.username}</h3>
+      </div>      
+    )
 
     const { name, id,  } = this.props.user; 
-
     let changeName;
     if (this.state.editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
@@ -61,10 +66,12 @@ class User extends Component {
     if (this.state.editImageClicked) {
       changeImage = <UploadImage />
     }
+    
 
     return ( 
       <div key={id} className="container">
-        <h3>{name}</h3>
+        {userProfile}
+        <h5>{name}</h5>
         {changeName}
         <button 
             className="btn btn-secondary" 
