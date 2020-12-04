@@ -25,3 +25,11 @@ export const registerUser = user => dispatch => {
             }
         });
 };
+
+// get user
+
+// update user
+
+// post user => already done, register user
+
+// no delete user 

@@ -1,79 +1,38 @@
 import { 
-  POST_NAME_SUCCESS, 
-  POST_NAME_ERROR,
-  UPDATE_NAME_SUCCESS,
-  UPDATE_NAME_ERROR
-} from '../actions/name-action';
-// import {
-//   UPDATE_IMAGE_STATE,
-//   UPDATE_IMAGE_SUCCESS,
-//   UPDATE_IMAGE_ERROR
-// } from '../actions/image-action';
+  EDIT_NAME,
+  EDIT_IMAGE
+} from '../actions/profile-action';
+
 
 const initState = {
     id: null, 
     name: "Please enter your nickname", 
-    // imageProfile: {
-    //   imageId: "",
-    //   imageUrl: "",
-    //   id: ''
-    // },
-    error: null
+    imageFile: {
+      imageName: "",
+      imageKey: "",
+      imageUrl: "",
+      id: ''
+    }
 }
 
 const profileReducer = (state=initState, action) => {
 
-  if (action.type === POST_NAME_SUCCESS) {
-    console.log('success')
+  if (action.type === EDIT_NAME) {
     return Object.assign({}, state, {
-      name: action.user.name,
-      id: action.user._id,
+        name: action.name
     })
   }
-  if (action.type === POST_NAME_ERROR) {
+  if (action.type === EDIT_IMAGE) {
     return Object.assign({}, state, {
-      error: action.error 
-    })
-  }
-
-  if (action.type === UPDATE_NAME_SUCCESS) {
-    console.log('success')
-    return Object.assign({}, state, {
-      name: action.user.name,
-      id: action.user._id,
-    })
-  }
-  if (action.type === UPDATE_NAME_ERROR) {
-    return Object.assign({}, state, {
-      error: action.error 
+        image: {
+          imageName: action.imageFile.imageName,
+          imageKey: action.imageFile.imageKey,
+          imageUrl: action.imageFile.imageUrl
+        }
     })
   }
 
-  // if (action.type === UPDATE_IMAGE_STATE) {
-  //   return Object.assign({}, state, { 
-  //     imageProfile: { 
-  //       imageId: action.imageData.imageProfile.imageId,
-  //       imageUrl: action.imageData.imageProfile.imageUrl,
-  //       id: action.imageData.imageProfile._id
-  //     } 
-  //   })
-  // }
-
-  // if (action.type === UPDATE_IMAGE_SUCCESS) {
-  //   return Object.assign({}, state, {
-  //     imageProfile: { 
-  //       imageId: action.imageData.imageProfile.imageId,
-  //       imageUrl: action.imageData.imageProfile.imageUrl,
-  //       id: action.imageData.imageProfile._id
-  //     }
-  //   })
-  // }
-  // if (action.type === UPDATE_IMAGE_ERROR) {
-  //   return Object.assign({}, state, {
-  //     error: action.error 
-  //   })
-  // }
-
+  console.log(state)
   return state;
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
-import { postNameRequest, updateNameRequest } from '../actions/name-action';
+import { editName, editImage } from '../actions/profile-action';
 import UploadImage from './upload-image';
 
 
@@ -11,19 +11,18 @@ class User extends Component {
     super(props)
       this.state = {
       editNameClicked: false,
-      editImageClicked: false
+      editImageClicked: false,
+      nickname: "",
+      image: ""
     }
   }
 
   // Input form for name 
   submit = value => {
-    if (this.props.user.name === "Please enter your nickname") {
-        this.props.postNameRequest(value)
-    } else {
-        const {name} = value;
-        this.props.user.name = name; 
-        this.props.updateNameRequest(this.props.user)
-    }
+    console.log(value)
+    const { name } = value; 
+    this.setState({ nickname: name })
+    this.props.editName(name);
   }
 
   // Make form input appear/disappear 
@@ -77,9 +76,9 @@ class User extends Component {
             className="btn btn-secondary" 
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
-        <div width="50%" height="50%" >
+        {/* <div width="50%" height="50%" >
             <img src={this.props.image.imageUrl} alt="profile" width="300px"/>
-        </div>
+        </div> */}
         <button 
             className="btn btn-secondary" 
             onClick={() => this.handleImageClick()}
@@ -100,8 +99,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-     postNameRequest,
-     updateNameRequest
+      editName, 
+      editImage
   }, dispatch)
 }
 

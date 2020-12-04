@@ -54,6 +54,6 @@ export default function authReducer(state = initialState, action) {
     console.log("AUTH_ERROR");
     return answer;
   }
-
+  console.log(state)
   return state;
 }
