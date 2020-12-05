@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { SubmissionError } from "redux-form";
 import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
-import { saveAuthToken, clearAuthToken } from "../local-storage";
+import { saveAuthToken, clearAuthToken, updateNickName } from "../local-storage";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = (authToken) => ({
@@ -135,6 +135,7 @@ export const updateUserRequest = () => (dispatch, getState) => {
     .then(json => {
       console.log('FIRE OFF UPDATE USER SUCCESS', json)
         dispatch(updateUserSuccess(json))
+        dispatch(updateNickName(user.nickName))
     })
     .catch(err => {
         dispatch(updateUserError(err))

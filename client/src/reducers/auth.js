@@ -46,8 +46,9 @@ export default function authReducer(state = initialState, action) {
       id: action.currentUser.id,
       authToken: action.authToken,
       username: action.currentUser.username,
+      nickName: action.currentUser.nickName
     });
-    console.log("AUTH_SUCCESS");
+    console.log("AUTH_SUCCESS", state);
     return answer;
   } else if (action.type === AUTH_ERROR) {
     answer = Object.assign({}, state, {

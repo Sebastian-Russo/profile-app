@@ -7,7 +7,7 @@ import {
 
 
 const initState = {
-    nickName: "Please enter your nickname", 
+    nickName: "", 
     imageFile: {
       imageName: "",
       imageKey: "",

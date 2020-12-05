@@ -4,7 +4,6 @@ import { API_BASE_URL } from "../config";
 
 export const EDIT_NAME = "EDIT_NAME";
 export const editName = nickName => {
-  console.log('ACTION', nickName)
   return {
     type: EDIT_NAME,
     nickName

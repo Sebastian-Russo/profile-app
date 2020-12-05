@@ -13,21 +13,21 @@ class User extends Component {
       this.state = {
       editNameClicked: false,
       editImageClicked: false,
-      nickname: "",
+      nickName: "",
       image: ""
     }
   }
 
-  componentDidMount() {
-    console.log(this.props.auth.nickName)
-    this.setState({ nickName: this.props.auth.nickname })
-  }
+  // componentDidMount() {
+  //   console.log(this.props.auth.nickName)
+  //   this.setState({ nickName: this.props.auth.nickname })
+  // }
 
   // Input form for name 
   submit = value => {
     console.log(value)
     const { name } = value; 
-    this.setState({ nickname: name })
+    this.setState({ nickName: name })
     this.props.editName(name);
   }
 
@@ -48,16 +48,24 @@ class User extends Component {
 
   render() { 
 
-    const { username } = this.props.auth;
-    console.log(this.props)
+    const { username, nickName } = this.props.auth;
+    console.log(this.props.user.nickName)
+
+    let nickNamePlaceHolder
+    if (this.props.user.nickName) {
+      nickNamePlaceHolder = this.props.user.nickName;
+    } else {
+      nickNamePlaceHolder = nickName;
+    }
+
     const userProfile = (
       <div>
         <h3>Username: {username}</h3>
+        <h5>Nick Name: {nickNamePlaceHolder}</h5>
       </div>      
     )
 
-    const {  id  } = this.props.user; 
-    const nickName = this.state.nickname
+    const { id  } = this.props.user; 
 
     let changeName;
     if (this.state.editNameClicked) {
@@ -70,9 +78,8 @@ class User extends Component {
     
 
     return ( 
-      <div key={id} className="container">
+      <div className="container">
         {userProfile}
-        <h5>{nickName}</h5>
         {changeName}
         <button 
             className="btn btn-secondary" 
