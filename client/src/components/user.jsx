@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router-dom';
 import UserForm from './user-form';
 import { editName, editImage } from '../actions/profile-action';
 import { updateUserRequest } from '../actions/auth';
 import UploadImage from './upload-image';
-
+import { updateNickName } from '../local-storage';
+import { logOut } from '../actions/auth';
 
 class User extends Component {
   constructor(props) {
@@ -18,17 +20,13 @@ class User extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   console.log(this.props.auth.nickName)
-  //   this.setState({ nickName: this.props.auth.nickname })
-  // }
-
   // Input form for name 
   submit = value => {
     console.log(value)
     const { name } = value; 
     this.setState({ nickName: name })
     this.props.editName(name);
+    updateNickName(name)
   }
 
   // Make form input appear/disappear 
@@ -46,7 +44,16 @@ class User extends Component {
     this.props.updateUserRequest()
   }
 
+  handleLogout = () => {
+    console.log('clicked logout')
+    this.props.logOut()
+  }
+
   render() { 
+    console.log(this.props)
+    if (this.props.auth.authToken === null) {
+      return <Redirect to="login" />
+    }
 
     const { username, nickName } = this.props.auth;
     console.log(this.props.user.nickName)
@@ -99,6 +106,12 @@ class User extends Component {
               onClick={this.handleSaveClick}
               >Save Changes</button>
         </div>
+        <div>
+          <button
+          className="btn btn-secondary m-2"
+          onClick={this.handleLogout}
+          >Logout</button>
+        </div>
       </div> 
     );
   }
@@ -115,7 +128,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({
       editName, 
       editImage,
-      updateUserRequest
+      updateUserRequest,
+      logOut
   }, dispatch)
 }
 

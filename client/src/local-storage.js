@@ -36,6 +36,8 @@ export const updateNickName = nickName => {
     localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
       nickName
     })));
+    // const user = localStorage.getItem('user');
+    // console.log(user)
   } catch (e) {
     console.error('error updating user in storage', e);
   }
