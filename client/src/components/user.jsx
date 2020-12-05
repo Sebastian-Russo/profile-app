@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UserForm from './user-form';
 import { editName, editImage } from '../actions/profile-action';
+import { updateUserRequest } from '../actions/auth';
 import UploadImage from './upload-image';
 
 
@@ -15,6 +16,11 @@ class User extends Component {
       nickname: "",
       image: ""
     }
+  }
+
+  componentDidMount() {
+    console.log(this.props.auth.nickName)
+    this.setState({ nickName: this.props.auth.nickname })
   }
 
   // Input form for name 
@@ -36,27 +42,23 @@ class User extends Component {
   }
 
   handleSaveClick = () => {
-    console.log('SAVE CLICKER',this.props.image)
-    if (this.props.image.id.length === 0) {
-      console.log('clicked')
-      this.props.postImageRequest(this.props.image)
-    } 
-    else if (this.props.image.id.length) {
-      this.props.updateImageRequest(this.props.image)
-    }
+    console.log('SAVE CLICKER')
+    this.props.updateUserRequest()
   }
 
   render() { 
 
-    const { auth } = this.props;
-    // console.log(auth)
+    const { username } = this.props.auth;
+    console.log(this.props)
     const userProfile = (
       <div>
-        <h3>Username: {auth.username}</h3>
+        <h3>Username: {username}</h3>
       </div>      
     )
 
-    const { name, id,  } = this.props.user; 
+    const {  id  } = this.props.user; 
+    const nickName = this.state.nickname
+
     let changeName;
     if (this.state.editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
@@ -70,7 +72,7 @@ class User extends Component {
     return ( 
       <div key={id} className="container">
         {userProfile}
-        <h5>{name}</h5>
+        <h5>{nickName}</h5>
         {changeName}
         <button 
             className="btn btn-secondary" 
@@ -84,6 +86,12 @@ class User extends Component {
             onClick={() => this.handleImageClick()}
             >Add/Edit Picture</button>
         {changeImage}
+        <div>
+          <button 
+              className="btn btn-secondary m-2"
+              onClick={this.handleSaveClick}
+              >Save Changes</button>
+        </div>
       </div> 
     );
   }
@@ -92,7 +100,6 @@ class User extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    image: state.image,
     auth: state.auth
   }
 }
@@ -100,7 +107,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
       editName, 
-      editImage
+      editImage,
+      updateUserRequest
   }, dispatch)
 }
 

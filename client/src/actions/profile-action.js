@@ -3,17 +3,17 @@ import { API_BASE_URL } from "../config";
 
 
 export const EDIT_NAME = "EDIT_NAME";
-export const editName = name => {
-  console.log(name)
+export const editName = nickName => {
+  console.log('ACTION', nickName)
   return {
     type: EDIT_NAME,
-    name
+    nickName
   }
 }
 
 export const EDIT_IMAGE = "EDIT_IMAGE";
 export const editImage = imageFile => {
-  console.log(imageFile)
+  // console.log(imageFile)
   return {
     type: EDIT_IMAGE,
     imageFile
@@ -22,7 +22,7 @@ export const editImage = imageFile => {
 
 // need jwt token 
 export const singleFileUploadRequest = (selectedFile) => {
-  console.log(selectedFile)
+  // console.log(selectedFile)
   const data = new FormData();
   data.append('imageFile', selectedFile, selectedFile.name);
   return dispatch => {

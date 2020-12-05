@@ -2,11 +2,12 @@ import {
   EDIT_NAME,
   EDIT_IMAGE
 } from '../actions/profile-action';
+// import { updateNickName } from '../local-storage';
+// import { updateUser } from '../local-storage';
 
 
 const initState = {
-    id: null, 
-    name: "Please enter your nickname", 
+    nickName: "Please enter your nickname", 
     imageFile: {
       imageName: "",
       imageKey: "",
@@ -18,8 +19,9 @@ const initState = {
 const profileReducer = (state=initState, action) => {
 
   if (action.type === EDIT_NAME) {
+    console.log('REDUCER', action.type, action.nickName)
     return Object.assign({}, state, {
-        name: action.name
+        nickName: action.nickName
     })
   }
   if (action.type === EDIT_IMAGE) {
@@ -32,7 +34,8 @@ const profileReducer = (state=initState, action) => {
     })
   }
 
-  console.log(state)
+  // updateNickName(state.nickName)
+  // console.log(state)
   return state;
 }
 

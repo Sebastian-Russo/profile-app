@@ -126,7 +126,8 @@ router.post('/', (req, res) => {
 
 // update nick name and profile image connected to user id 
 router.put('/:id', jwtAuth, (req, res) => {
-  console.log(req.params, req.body, req.body.id)
+  console.log('PUT REQ', req.params, req.body, req.body.id)
+  
   if(!(req.params.id && req.body.id && req.params.id == req.body.id)) {
       const message = (`Request path id (${req.params.id}) and request body id (${req.body.id}) must match`)
       console.error(message);
@@ -134,7 +135,7 @@ router.put('/:id', jwtAuth, (req, res) => {
   }
 
   const toUpdate = {};
-  const updateableFields = ["nickName", "profileImage"];
+  const updateableFields = ["nickName", "image"];
 
   updateableFields.forEach(field => {
       if (field in req.body) {
@@ -147,7 +148,7 @@ router.put('/:id', jwtAuth, (req, res) => {
       .then(updateUser => {
           res.status(204).json({
               nickName: updateUser.nickName,
-              profileImage: updateUser.profileImage
+              image: updateUser.profileImage
           })
       })
       .catch(err => res.status(500).json({ message: err.message }));

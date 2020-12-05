@@ -28,17 +28,18 @@ try {
 }
 }
 
-// export const addToList = (list, item) => {
-// try {
-//   const userJSON = localStorage.getItem('user');
-//   const userObj = JSON.parse(userJSON);
-//   localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
-//     [list]: [...userObj[list], item]
-//   })));
-// } catch (e) {
-//   console.error('error updating user in storage', e);
-// }
-// }
+export const updateNickName = nickName => {
+  console.log('toUpdate', nickName);
+  try {
+    const userJSON = localStorage.getItem('user');
+    const userObj = JSON.parse(userJSON);
+    localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
+      nickName
+    })));
+  } catch (e) {
+    console.error('error updating user in storage', e);
+  }
+  }
 
 export const clearAuthToken = () => {
   try {
