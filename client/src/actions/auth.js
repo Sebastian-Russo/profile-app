@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { SubmissionError } from "redux-form";
 import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
-import { saveAuthToken, clearAuthToken } from "../local-storage";
+import { saveAuthToken, clearAuthToken, updateNickName } from "../local-storage";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = (authToken) => ({
@@ -33,9 +33,9 @@ export const authError = (error) => ({
   error,
 });
 
-export const ADD_FROM_USER_PROFILE = "ADD_FROM_USER_PROFILE";
-export const addFromUserProfile = (nickName, profileImage) => ({
-  type: ADD_FROM_USER_PROFILE,
+export const ADD_USER_PROFILE = "ADD_USER_PROFILE";
+export const addUserProfile = (nickName, profileImage) => ({
+  type: ADD_USER_PROFILE,
   nickName,
   profileImage
 });
@@ -43,7 +43,8 @@ export const addFromUserProfile = (nickName, profileImage) => ({
 const storeAuthInfo = (authToken, dispatch) => {
   const { user } = jwtDecode(authToken);
   dispatch(authSuccess(authToken, user)); // authSuccess(authToken, decodedToken.user)
-  dispatch(addFromUserProfile(user.nickName, user.profileImage));
+  dispatch(addUserProfile(user.nickName, user.profileImage));
+  console.log(user)
   saveAuthToken(authToken, user);
 };
 
@@ -62,7 +63,8 @@ export const login = (username, password) => (dispatch) => {
     .then((res) => normalizeResponseErrors(res))
     .then((res) => res.json())
     .then(({ authToken }) => {
-      return storeAuthInfo(authToken, dispatch);
+      storeAuthInfo(authToken, dispatch);
+      return
     })
     .catch((err) => {
       console.log(err.code);
@@ -98,6 +100,45 @@ export const refreshAuthToken = () => (dispatch, getState) => {
       dispatch(authError(err));
       dispatch(clearAuth());
       clearAuthToken(authToken);
+    });
+};
+
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const updateUserSuccess = ( user ) => ({
+    type: UPDATE_USER_SUCCESS,
+    user
+})
+
+export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
+export const updateUserError = error => ({
+    type: UPDATE_USER_ERROR,
+    error
+})
+
+export const updateUserRequest = () => (dispatch, getState) => {
+    const { auth, user } = getState();
+    console.log('updateUserReq action', auth.id, user.nickName)
+
+    fetch(`${API_BASE_URL}/users/${auth.id}`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${auth.authToken}`,
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: auth.id,
+            nickName: user.nickName
+            // image
+        })
+    })  
+    .then(res => res.json())  
+    .then(json => {
+      console.log('FIRE OFF UPDATE USER SUCCESS', json)
+        dispatch(updateUserSuccess(json))
+        dispatch(updateNickName(user.nickName))
+    })
+    .catch(err => {
+        dispatch(updateUserError(err))
     });
 };
 

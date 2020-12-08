@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router-dom';
 import UserForm from './user-form';
-import { postNameRequest, updateNameRequest } from '../actions/name-action';
+import { editName, editImage } from '../actions/profile-action';
+import { updateUserRequest } from '../actions/auth';
 import UploadImage from './upload-image';
-
+import { updateNickName } from '../local-storage';
+import { logOut } from '../actions/auth';
 
 class User extends Component {
   constructor(props) {
     super(props)
       this.state = {
       editNameClicked: false,
-      editImageClicked: false
+      editImageClicked: false,
+      nickName: "",
+      image: ""
     }
   }
 
   // Input form for name 
   submit = value => {
-    if (this.props.user.name === "Please enter your nickname") {
-        this.props.postNameRequest(value)
-    } else {
-        const {name} = value;
-        this.props.user.name = name; 
-        this.props.updateNameRequest(this.props.user)
-    }
+    console.log(value)
+    const { name } = value; 
+    this.setState({ nickName: name })
+    this.props.editName(name);
+    updateNickName(name)
   }
 
   // Make form input appear/disappear 
@@ -37,27 +40,39 @@ class User extends Component {
   }
 
   handleSaveClick = () => {
-    console.log('SAVE CLICKER',this.props.image)
-    if (this.props.image.id.length === 0) {
-      console.log('clicked')
-      this.props.postImageRequest(this.props.image)
-    } 
-    else if (this.props.image.id.length) {
-      this.props.updateImageRequest(this.props.image)
-    }
+    console.log('SAVE CLICKER')
+    this.props.updateUserRequest()
+  }
+
+  handleLogout = () => {
+    console.log('clicked logout')
+    this.props.logOut()
   }
 
   render() { 
+    console.log(this.props)
+    if (this.props.auth.authToken === null) {
+      return <Redirect to="login" />
+    }
 
-    const { auth } = this.props;
-    // console.log(auth)
+    const { username, nickName } = this.props.auth;
+
+    let nickNamePlaceHolder
+    if (this.props.user.nickName) {
+      nickNamePlaceHolder = this.props.user.nickName;
+    } else {
+      nickNamePlaceHolder = nickName;
+    }
+
     const userProfile = (
       <div>
-        <h3>Username: {auth.username}</h3>
+        <h3>Username: {username}</h3>
+        <h5>Nick Name: {nickNamePlaceHolder}</h5>
       </div>      
     )
 
-    const { name, id,  } = this.props.user; 
+    const { id  } = this.props.user; 
+
     let changeName;
     if (this.state.editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
@@ -69,22 +84,33 @@ class User extends Component {
     
 
     return ( 
-      <div key={id} className="container">
+      <div className="container">
         {userProfile}
-        <h5>{name}</h5>
         {changeName}
         <button 
             className="btn btn-secondary" 
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
         <div width="50%" height="50%" >
-            <img src={this.props.image.imageUrl} alt="profile" width="300px"/>
+            <img src={this.props.user.imageFile.imageUrl} alt="profile" width="300px"/>
         </div>
         <button 
             className="btn btn-secondary" 
             onClick={() => this.handleImageClick()}
             >Add/Edit Picture</button>
         {changeImage}
+        <div>
+          <button 
+              className="btn btn-secondary m-2"
+              onClick={this.handleSaveClick}
+              >Save Changes</button>
+        </div>
+        <div>
+          <button
+          className="btn btn-secondary m-2"
+          onClick={this.handleLogout}
+          >Logout</button>
+        </div>
       </div> 
     );
   }
@@ -93,15 +119,16 @@ class User extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    image: state.image,
     auth: state.auth
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-     postNameRequest,
-     updateNameRequest
+      editName, 
+      editImage,
+      updateUserRequest,
+      logOut
   }, dispatch)
 }
 

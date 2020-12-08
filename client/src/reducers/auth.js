@@ -4,6 +4,9 @@ import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   SET_AUTH_TOKEN,
+  ADD_USER_PROFILE,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR
 } from "../actions/auth";
 
 const initialState = {
@@ -12,7 +15,7 @@ const initialState = {
   loading: false,
   username: "",
   authToken: null, 
-  userProfile: null
+  nickName: "Please add a nick name"
 };
 
 export default function authReducer(state = initialState, action) {
@@ -43,8 +46,9 @@ export default function authReducer(state = initialState, action) {
       id: action.currentUser.id,
       authToken: action.authToken,
       username: action.currentUser.username,
+      nickName: action.currentUser.nickName
     });
-    console.log("AUTH_SUCCESS");
+    console.log("AUTH_SUCCESS", state);
     return answer;
   } else if (action.type === AUTH_ERROR) {
     answer = Object.assign({}, state, {
@@ -53,6 +57,23 @@ export default function authReducer(state = initialState, action) {
     });
     console.log("AUTH_ERROR");
     return answer;
+  }
+  if (action.type === ADD_USER_PROFILE) {
+    console.log('ADD_USER_PROFILE')
+    return Object.assign({}, state, {
+      nickName: action.nickName
+    })
+  }
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return Object.assign({}, state, {
+      nickName: action.nickName
+    })
+  }
+  if (action.type === UPDATE_USER_ERROR) {
+    return Object.assign({}, state, {
+      loading: false,
+      error: action.error,
+    });
   }
 
   return state;
