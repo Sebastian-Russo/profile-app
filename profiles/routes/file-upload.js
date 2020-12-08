@@ -17,13 +17,14 @@ router.post('/', (req, res) => {
         console.log('Error: No File Selected!')
       } else {
         // Success
-        const imageProfile = new ImageSchema({
-          imageId: req.file.key,
-          imageUrl: req.file.location
+        const imageFile = new ImageSchema({
+          imageKey: req.file.key,
+          imageUrl: req.file.location,
+          imageName: req.file.name
         })
       // Save the file name into database into profile model
         res.status(200).json({
-          imageProfile
+          imageFile
         });
       }
     }
@@ -38,8 +39,9 @@ router.put('/:id', jsonParser, async (req, res) => {
     const updateImage = await ImageSchema.updateOne(
       {_id: req.params.id },
       { $set: {
-        imageId: req.body.imageId,
-        imageUrl: req.body.imageUrl
+        imageKey: req.body.imageKey,
+        imageUrl: req.body.imageUrl,
+        imageName: req.body.imageName
       }
       });
       console.log(updateImage)

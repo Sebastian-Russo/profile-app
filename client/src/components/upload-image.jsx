@@ -21,7 +21,8 @@
         }
      
         singleFileUploadHandler = () => {
-            this.props.singleFileUploadRequest(this.state.selectedFile)
+            const { selectedFile } = this.state;
+            this.props.singleFileUploadRequest(selectedFile)
         }
 
         render() { 
