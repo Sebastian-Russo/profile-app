@@ -56,7 +56,6 @@ class User extends Component {
     }
 
     const { username, nickName } = this.props.auth;
-    console.log(this.props.user.nickName)
 
     let nickNamePlaceHolder
     if (this.props.user.nickName) {
@@ -92,9 +91,9 @@ class User extends Component {
             className="btn btn-secondary" 
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
-        {/* <div width="50%" height="50%" >
-            <img src={this.props.image.imageUrl} alt="profile" width="300px"/>
-        </div> */}
+        <div width="50%" height="50%" >
+            <img src={this.props.user.imageFile.imageUrl} alt="profile" width="300px"/>
+        </div>
         <button 
             className="btn btn-secondary" 
             onClick={() => this.handleImageClick()}

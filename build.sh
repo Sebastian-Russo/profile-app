@@ -1,16 +1,20 @@
 #!/bin/bash
 echo Hello World 
 
-npm i aws-sdk body-parser concurrently cors dotenv express joi mongoose multer multer-s3 
+npm i concurrently
+npm i aws-sdk 
+npm i body-parser cors dotenv express joi mongoose 
+npm i multer multer-s3 
 npm i lodash
 npm i lodash.isempty
 npm i classnames
 npm i jwt-decode
 
 cd client
-npm i bcryptjs passport passport-local passport-jwt jsonwebtoken axios bootstrap config jquery node-modules react react-bootstrap react-dom react-scripts redux redux-form redux-thunk web-vitals 
+npm i bcryptjs passport passport-local passport-jwt jsonwebtoken 
+npm i bootstrap config jquery react react-bootstrap react-dom react-scripts redux redux-form redux-thunk react-router-dom 
 npm install --save prop-types
-npm i react-router-dom
+npm i web-vitals axios
 npm i jwt-decode
 cd ..
 

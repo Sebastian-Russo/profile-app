@@ -32,7 +32,6 @@ const profileReducer = (state=initState, action) => {
     })
   }
 
-  console.log(state)
   return state;
 }
 
