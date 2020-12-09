@@ -52,7 +52,7 @@ class User extends Component {
   render() { 
     console.log(this.props)
     if (this.props.auth.authToken === null) {
-      return <Redirect to="login" />
+      return <Redirect to="/" />
     }
 
     const { username, nickName } = this.props.auth;

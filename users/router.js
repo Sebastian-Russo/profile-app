@@ -148,7 +148,7 @@ router.put('/:id', jwtAuth, (req, res) => {
       .then(updateUser => {
           res.status(204).json({
               nickName: updateUser.nickName,
-              image: updateUser.profileImage
+              image: updateUser.imageFile
           })
       })
       .catch(err => res.status(500).json({ message: err.message }));

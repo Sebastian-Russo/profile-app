@@ -4,7 +4,7 @@ export const loadAuthToken = () => {
   return JSON.parse(user) //  returns { authToken: <token>, userId: <id> }
 };
 
-export const saveAuthToken = (authToken, { id, username, nickName, profileImage }) => {
+export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) => {
   try {
       console.log('storing in local storage') // authToken, userId, username, nick name, profile image
       localStorage.setItem('user', JSON.stringify({
@@ -12,7 +12,7 @@ export const saveAuthToken = (authToken, { id, username, nickName, profileImage 
         id,
         username,
         nickName, 
-        profileImage
+        imageFile
       }));
   } catch (e) {}
 };
@@ -36,12 +36,26 @@ export const updateNickName = nickName => {
     localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
       nickName
     })));
-    // const user = localStorage.getItem('user');
-    // console.log(user)
   } catch (e) {
     console.error('error updating user in storage', e);
   }
-  }
+}
+
+  export const updateImage = imageFile => {
+    console.log('toUpdate', imageFile);
+    try {
+      const userJSON = localStorage.getItem('user');
+      const userObj = JSON.parse(userJSON);
+      localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
+        imageFile: {
+          imageKey: imageFile.imageKey,
+          imageUrl: imageFile.imageUrl
+        }
+      })));
+    } catch (e) {
+      console.error('error updating user in storage', e);
+    }
+    }
 
 export const clearAuthToken = () => {
   try {

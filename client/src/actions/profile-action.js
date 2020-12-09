@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { API_BASE_URL } from "../config";
-
+import { updateImage} from '../local-storage';
 
 export const EDIT_NAME = "EDIT_NAME";
 export const editName = nickName => {
@@ -48,6 +48,7 @@ export const singleFileUploadRequest = (selectedFile) => {
             // UPDATE STORE 
             console.log(fileName)
             dispatch(editImage(fileName))
+            updateImage(fileName)
             alert('File Uploaded');
           }
         }

@@ -15,7 +15,11 @@ const initialState = {
   loading: false,
   username: "",
   authToken: null, 
-  nickName: "Please add a nick name"
+  nickName: "Please add a nick name",
+  imageFile: {
+    imageUrl: "",
+    imageKey: ""
+  }
 };
 
 export default function authReducer(state = initialState, action) {
@@ -46,7 +50,12 @@ export default function authReducer(state = initialState, action) {
       id: action.currentUser.id,
       authToken: action.authToken,
       username: action.currentUser.username,
-      nickName: action.currentUser.nickName
+      nickName: action.currentUser.nickName,
+      imageFile: action.currentUser.imageFile
+      // imageFile: {
+      //   imageUrl: action.currentUser.imageFile.imageUrl,
+      //   imageKey: action.currentUser.imageFile.imageKey
+      // }
     });
     console.log("AUTH_SUCCESS", state);
     return answer;
@@ -61,12 +70,20 @@ export default function authReducer(state = initialState, action) {
   if (action.type === ADD_USER_PROFILE) {
     console.log('ADD_USER_PROFILE')
     return Object.assign({}, state, {
-      nickName: action.nickName
+      nickName: action.nickName,
+      imageFile: {
+        imageUrl: action.currentUser.imageFile.imageUrl,
+        imageKey: action.currentUser.imageFile.imageKey
+      }
     })
   }
   if (action.type === UPDATE_USER_SUCCESS) {
     return Object.assign({}, state, {
-      nickName: action.nickName
+      nickName: action.nickName,
+      imageFile: {
+        imageUrl: action.currentUser.imageFile.imageUrl,
+        imageKey: action.currentUser.imageFile.imageKey
+      }
     })
   }
   if (action.type === UPDATE_USER_ERROR) {
@@ -75,6 +92,7 @@ export default function authReducer(state = initialState, action) {
       error: action.error,
     });
   }
-
+  
+  console.log(state)
   return state;
 }

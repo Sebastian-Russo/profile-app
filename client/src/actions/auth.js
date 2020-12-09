@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { SubmissionError } from "redux-form";
 import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
-import { saveAuthToken, clearAuthToken, updateNickName } from "../local-storage";
+import { saveAuthToken, clearAuthToken, updateNickName, updateImage } from "../local-storage";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = (authToken) => ({
@@ -34,16 +34,16 @@ export const authError = (error) => ({
 });
 
 export const ADD_USER_PROFILE = "ADD_USER_PROFILE";
-export const addUserProfile = (nickName, profileImage) => ({
+export const addUserProfile = (nickName, imageFIle) => ({
   type: ADD_USER_PROFILE,
   nickName,
-  profileImage
+  imageFIle
 });
 
 const storeAuthInfo = (authToken, dispatch) => {
   const { user } = jwtDecode(authToken);
   dispatch(authSuccess(authToken, user)); // authSuccess(authToken, decodedToken.user)
-  dispatch(addUserProfile(user.nickName, user.profileImage));
+  dispatch(addUserProfile(user.nickName, user.imageFIle));
   console.log(user)
   saveAuthToken(authToken, user);
 };
@@ -117,8 +117,7 @@ export const updateUserError = error => ({
 
 export const updateUserRequest = () => (dispatch, getState) => {
     const { auth, user } = getState();
-    console.log('updateUserReq action', auth.id, user.nickName)
-
+    console.log('udateUserReq', user)
     fetch(`${API_BASE_URL}/users/${auth.id}`, {
         method: 'PUT',
         headers: {
@@ -127,15 +126,19 @@ export const updateUserRequest = () => (dispatch, getState) => {
         },
         body: JSON.stringify({
             id: auth.id,
-            nickName: user.nickName
-            // image
+            nickName: user.nickName,
+            imageFile: {
+              imageKey: user.imageFile.imageKey,
+              imageUrl: user.imageFile.imageUrl
+            }
         })
     })  
     .then(res => res.json())  
     .then(json => {
       console.log('FIRE OFF UPDATE USER SUCCESS', json)
-        dispatch(updateUserSuccess(json))
-        dispatch(updateNickName(user.nickName))
+        // dispatch(updateUserSuccess(json))
+        // dispatch(updateNickName(user.nickName))
+        // dispatch(updateImage(user.imageFile))
     })
     .catch(err => {
         dispatch(updateUserError(err))
