@@ -50,10 +50,17 @@ class User extends Component {
   }
 
   render() { 
-    console.log(this.props)
-    if (this.props.auth.authToken === null) {
-      return <Redirect to="/" />
-    }
+    console.log(this.state.auth)
+    console.log(this.state.user)
+    console.log(this.state)
+
+
+    // if (this.props.auth.authToken === null) {
+    //   return <Redirect to="/login" />
+    // } 
+    // else if (this.props.auth.authToken !== null) {
+    //   return <Redirect to="/user" />
+    // }
 
     const { username, nickName } = this.props.auth;
 
@@ -117,6 +124,7 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('MAP', state)
   return {
     user: state.user,
     auth: state.auth

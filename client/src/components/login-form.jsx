@@ -7,18 +7,22 @@ import {required, nonEmpty} from '../validators';
 
 export class LoginForm extends React.Component {
     onSubmit(values) {
+        console.log(values)
         return this.props.dispatch(login(values.username, values.password));
     }
 
     render() {
+        console.log('this.props', this.props)
+
         let error; 
 
         if(this.props.submitSucceeded) {
           console.log('submit succeeded!')
-          return <Redirect to='user' />
+          return <Redirect to='/user' />
         }
 
         if (this.props.error){
+            console.log('this.props error', this.props)
             error = (
                 <div className="form-error" aria-live="polite">
                     {this.props.error}

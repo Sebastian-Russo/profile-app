@@ -21,10 +21,10 @@ export const authRequest = () => ({
 });
 
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
-export const authSuccess = (authToken, currentUser) => ({
+export const authSuccess = (authToken, user) => ({
   type: AUTH_SUCCESS,
   authToken,
-  currentUser,
+  user,
 });
 
 export const AUTH_ERROR = "AUTH_ERROR";
@@ -43,7 +43,8 @@ export const addUserProfile = (nickName, imageFIle) => ({
 const storeAuthInfo = (authToken, dispatch) => {
   const { user } = jwtDecode(authToken);
   dispatch(authSuccess(authToken, user)); // authSuccess(authToken, decodedToken.user)
-  dispatch(addUserProfile(user.nickName, user.imageFIle));
+  /****** CAUSING LOGIN ERROR  "Unable to login, please try again" *******/
+  // dispatch(addUserProfile(user.nickName, user.imageFIle));
   console.log(user)
   saveAuthToken(authToken, user);
 };
@@ -63,11 +64,9 @@ export const login = (username, password) => (dispatch) => {
     .then((res) => normalizeResponseErrors(res))
     .then((res) => res.json())
     .then(({ authToken }) => {
-      storeAuthInfo(authToken, dispatch);
-      return
+      return storeAuthInfo(authToken, dispatch);      
     })
     .catch((err) => {
-      console.log(err.code);
       const { code } = err;
       const message =
         code === 401

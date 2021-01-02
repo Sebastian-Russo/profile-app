@@ -11,7 +11,7 @@ function App() {
             <Switch>
                 <Route
                     exact
-                    path="/"
+                    path="/login"
                     component={SignupPage}
                 />
                 <Route 

@@ -28,47 +28,42 @@ export default function authReducer(state = initialState, action) {
     answer = Object.assign({}, state, {
       authToken: action.authToken,
     });
-    console.log("SET_AUTH_TOKEN");
     return answer;
   } else if (action.type === CLEAR_AUTH) {
     answer = Object.assign({}, state, {
       authToken: null,
       id: null,
     });
-    console.log("CLEAR_AUTH");
     return answer;
   } else if (action.type === AUTH_REQUEST) {
     answer = Object.assign({}, state, {
       loading: true,
       error: null,
     });
-    console.log("AUTH_REQUEST");
     return answer;
   } else if (action.type === AUTH_SUCCESS) {
     answer = Object.assign({}, state, {
       loading: false,
-      id: action.currentUser.id,
       authToken: action.authToken,
-      username: action.currentUser.username,
-      nickName: action.currentUser.nickName,
-      imageFile: action.currentUser.imageFile
+      id: action.user.id,
+      email: action.user.email, 
+      username: action.user.username,
+      nickName: action.user.nickName,
+      imageFile: action.user.imageFile
       // imageFile: {
       //   imageUrl: action.currentUser.imageFile.imageUrl,
       //   imageKey: action.currentUser.imageFile.imageKey
       // }
     });
-    console.log("AUTH_SUCCESS", state);
     return answer;
   } else if (action.type === AUTH_ERROR) {
     answer = Object.assign({}, state, {
       loading: false,
       error: action.error,
     });
-    console.log("AUTH_ERROR");
     return answer;
   }
   if (action.type === ADD_USER_PROFILE) {
-    console.log('ADD_USER_PROFILE')
     return Object.assign({}, state, {
       nickName: action.nickName,
       imageFile: {
@@ -93,6 +88,6 @@ export default function authReducer(state = initialState, action) {
     });
   }
   
-  console.log(state)
+  // console.log(state)s
   return state;
 }
