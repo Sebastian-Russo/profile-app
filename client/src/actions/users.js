@@ -4,7 +4,6 @@ import { login } from './auth';
 import { normalizeResponseErrors } from './utils';
 import { API_BASE_URL } from "../config";
 import { updateUser } from '../local-storage';
-import { updateUserSuccess } from './auth';
 
 // EDIT STATE update nickName 
 export const EDIT_NAME = "EDIT_NAME";
@@ -69,7 +68,19 @@ export const singleFileUploadRequest = (selectedFile, getState) => {
   }
 
 
-// "SAVE BUTTON"
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const updateUserSuccess = ( user ) => ({
+    type: UPDATE_USER_SUCCESS,
+    user
+})
+
+export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
+export const updateUserError = error => ({
+    type: UPDATE_USER_ERROR,
+    error
+})
+
+// "SAVE BUTTON" API call to mongoDB 
 export const updateUserRequest = () => (dispatch, getState, user) => {
     const { auth } = getState();
     console.log('udateUserReq', user)

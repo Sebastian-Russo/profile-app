@@ -60,23 +60,6 @@ export default function authReducer(state = initialState, action) {
     });
     return answer;
   }
-  if (action.type === UPDATE_USER_SUCCESS) {
-    console.log('UPDATE USER SUCCESS', action)
-    return Object.assign({}, state, {
-      nickName: action.nickName,
-      imageFile: {
-        imageUrl: action.user.imageFile.imageUrl,
-        imageName: action.user.imageFile.name,
-        imageKey: action.user.imageFile.imageKey
-      }
-    })
-  }
-  if (action.type === UPDATE_USER_ERROR) {
-    return Object.assign({}, state, {
-      loading: false,
-      error: action.error,
-    });
-  }
   
   return state;
 }

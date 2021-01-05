@@ -92,18 +92,6 @@ export const refreshAuthToken = () => (dispatch, getState) => {
     });
 };
 
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const updateUserSuccess = ( user ) => ({
-    type: UPDATE_USER_SUCCESS,
-    user
-})
-
-export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
-export const updateUserError = error => ({
-    type: UPDATE_USER_ERROR,
-    error
-})
-
 export const logOut = () => async (dispatch) => {
   dispatch(clearAuth());
   clearAuthToken();
