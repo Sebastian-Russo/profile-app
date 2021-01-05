@@ -24,10 +24,6 @@ SignupForm.proptypes = {
   userSignupRequest: PropTypes.func.isRequired 
 }
 
-// const mapStateToProps = state => {
-//   return {}
-// }
-
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     userSignupRequest

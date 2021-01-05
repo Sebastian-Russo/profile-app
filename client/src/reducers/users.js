@@ -1,20 +1,44 @@
-// import {
+import {
+  EDIT_NAME,
+  EDIT_IMAGE
+} from "../actions/users";
 
-// } from "../actions/users";
 
+  const initialState = {
+    error: null,
+    loading: false,
 
-//   const initialState = {
-//     id: null, 
-//     error: null,
-//     loading: false,
-//     username: "",
-//     authToken: null, 
-//     userProfile: null
-//   };
+    id: null, 
+    username: "",
+    authToken: null, 
+
+    nickName: "Please add a nick name", 
+    imageFile: {
+      imageName: "",
+      imageKey: "",
+      imageUrl: "",
+      id: ''
+    }
+  };
   
-//   export default function userReducer(state = initialState, action) {
-    
+  const userReducer = (state = initialState, action) => {
+    if (action.type === EDIT_NAME) {
+      console.log('USER REDUCER', action.type, action.nickName)
+      return Object.assign({}, state, {
+          nickName: action.nickName
+      })
+    }
+    if (action.type === EDIT_IMAGE) {
+      return Object.assign({}, state, {
+          imageFile: {
+            imageName: action.imageFile.imageName,
+            imageKey: action.imageFile.imageKey,
+            imageUrl: action.imageFile.imageUrl
+          }
+      })
+    }
 
-//     return state;
-//   }
+    return state;
+  }
   
+  export default userReducer;

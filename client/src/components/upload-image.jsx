@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { singleFileUploadRequest } from '../actions/profile-action';
+import { singleFileUploadRequest } from '../actions/users';
 
 
 class UploadIMage extends Component {
@@ -21,6 +21,7 @@ class UploadIMage extends Component {
 
   singleFileUploadHandler = () => {
       const { selectedFile } = this.state;
+      // API request to S3 storage 
       this.props.singleFileUploadRequest(selectedFile)
   }
 

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import UserForm from './user-form';
-import { editName, editImage } from '../actions/profile-action';
-import { updateUserRequest } from '../actions/auth';
+import { editName, editImage } from '../actions/users';
+import { updateUserRequest } from '../actions/users';
 import UploadImage from './upload-image';
-import { updateNickName } from '../local-storage';
+import { updateUser } from '../local-storage';
 import { logOut } from '../actions/auth';
 
 class User extends Component {
@@ -26,7 +26,8 @@ class User extends Component {
     const { name } = value; 
     this.setState({ nickName: name })
     this.props.editName(name);
-    updateNickName(name)
+    updateUser(name);
+    // updateNickName(name)
   }
 
   // Make form input appear/disappear 
@@ -40,8 +41,11 @@ class User extends Component {
   }
 
   handleSaveClick = () => {
-    console.log('SAVE CLICKER')
-    this.props.updateUserRequest()
+    const user = {
+      nickName: this.state.nickName,
+      imageFile: this.state.image
+    }
+    this.props.updateUserRequest(user)
   }
 
   handleLogout = () => {
@@ -50,17 +54,6 @@ class User extends Component {
   }
 
   render() { 
-    console.log(this.state.auth)
-    console.log(this.state.user)
-    console.log(this.state)
-
-
-    // if (this.props.auth.authToken === null) {
-    //   return <Redirect to="/login" />
-    // } 
-    // else if (this.props.auth.authToken !== null) {
-    //   return <Redirect to="/user" />
-    // }
 
     const { username, nickName } = this.props.auth;
 

@@ -6,7 +6,7 @@ export const loadAuthToken = () => {
 
 export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) => {
   try {
-      console.log('storing in local storage') // authToken, userId, username, nick name, profile image
+      console.log('storing in local storage', id, username, nickName, imageFile ) // authToken, userId, username, nick name, profile image
       localStorage.setItem('user', JSON.stringify({
         authToken,
         id,
@@ -14,48 +14,27 @@ export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) 
         nickName, 
         imageFile
       }));
-  } catch (e) {}
+  } catch (err) {
+    console.error('error saving authToken and storing user in local storage', err)
+  }
 };
 
 export const updateUser = toUpdate => {
-console.log('toUpdate', toUpdate);
 try {
   const userJSON = localStorage.getItem('user');
   const userObj = JSON.parse(userJSON);
-  localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, toUpdate)));
-} catch (e) {
-  console.error('error updating user in storage', e);
+  console.log('local storage userObj', userObj);
+  console.log('local storage toUpdate', toUpdate);
+  localStorage.setItem('user', JSON.stringify(
+    Object.assign({}, 
+      userObj, 
+      toUpdate
+    ))
+  );
+} catch (err) {
+  console.error('error updating user in local storage', err);
 }
 }
-
-export const updateNickName = nickName => {
-  console.log('toUpdate', nickName);
-  try {
-    const userJSON = localStorage.getItem('user');
-    const userObj = JSON.parse(userJSON);
-    localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
-      nickName
-    })));
-  } catch (e) {
-    console.error('error updating user in storage', e);
-  }
-}
-
-  export const updateImage = imageFile => {
-    console.log('toUpdate', imageFile);
-    try {
-      const userJSON = localStorage.getItem('user');
-      const userObj = JSON.parse(userJSON);
-      localStorage.setItem('user', JSON.stringify(Object.assign({}, userObj, {
-        imageFile: {
-          imageKey: imageFile.imageKey,
-          imageUrl: imageFile.imageUrl
-        }
-      })));
-    } catch (e) {
-      console.error('error updating user in storage', e);
-    }
-    }
 
 export const clearAuthToken = () => {
   try {

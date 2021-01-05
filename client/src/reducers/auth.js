@@ -4,7 +4,7 @@ import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   SET_AUTH_TOKEN,
-  ADD_USER_PROFILE,
+  // ADD_USER_PROFILE,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR
 } from "../actions/auth";
@@ -50,10 +50,6 @@ export default function authReducer(state = initialState, action) {
       username: action.user.username,
       nickName: action.user.nickName,
       imageFile: action.user.imageFile
-      // imageFile: {
-      //   imageUrl: action.currentUser.imageFile.imageUrl,
-      //   imageKey: action.currentUser.imageFile.imageKey
-      // }
     });
     return answer;
   } else if (action.type === AUTH_ERROR) {
@@ -63,21 +59,14 @@ export default function authReducer(state = initialState, action) {
     });
     return answer;
   }
-  if (action.type === ADD_USER_PROFILE) {
-    return Object.assign({}, state, {
-      nickName: action.nickName,
-      imageFile: {
-        imageUrl: action.currentUser.imageFile.imageUrl,
-        imageKey: action.currentUser.imageFile.imageKey
-      }
-    })
-  }
   if (action.type === UPDATE_USER_SUCCESS) {
+    console.log('UPDATE USER SUCCESS', action)
     return Object.assign({}, state, {
       nickName: action.nickName,
       imageFile: {
-        imageUrl: action.currentUser.imageFile.imageUrl,
-        imageKey: action.currentUser.imageFile.imageKey
+        imageUrl: action.user.imageFile.imageUrl,
+        imageName: action.user.imageFile.name,
+        imageKey: action.user.imageFile.imageKey
       }
     })
   }
@@ -88,6 +77,5 @@ export default function authReducer(state = initialState, action) {
     });
   }
   
-  // console.log(state)s
   return state;
 }
