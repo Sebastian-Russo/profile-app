@@ -14,6 +14,7 @@ const initialState = {
   error: null,
   loading: false,
   username: "",
+  email: null,
   authToken: null, 
   nickName: "Please add a nick name",
   imageFile: {
