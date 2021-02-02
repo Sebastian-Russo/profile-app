@@ -7,7 +7,7 @@ export const loadAuthToken = () => {
 export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) => {
   try {
       console.log('storing in local storage', id, username, nickName, imageFile ) // authToken, userId, username, nick name, profile image
-      localStorage.setItem('user', JSON.stringify({
+      localStorage.setItem('user', JSON.stringify({ // reason to stringify, keeps the data type the same aka string and not something else like obj or symbol, for safety - don't run into type issues 
         authToken,
         id,
         username,
@@ -18,28 +18,27 @@ export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) 
     console.error('error saving authToken and storing user in local storage', err)
   }
 };
-
-export const updateUser = toUpdate => {
+      // 2nd arg, either nickName or imageFile 
+export const updateUser = (updateUserObj, key) => {
 try {
   const userJSON = localStorage.getItem('user');
-  const userObj = JSON.parse(userJSON);
-  console.log('local storage userObj', userObj);
-  console.log('local storage toUpdate', toUpdate);
+  const currentUserObj = JSON.parse(userJSON);
   localStorage.setItem('user', JSON.stringify(
-    Object.assign({}, 
-      userObj, 
-      toUpdate
-    ))
+    Object.assign({}, currentUserObj, {
+      [key]: key === "nickName" ? updateUserObj : {...updateUserObj}
+    }))
   );
 } catch (err) {
-  console.error('error updating user in local storage', err);
-}
-}
+    console.error('error updating user in local storage', err);
+  }
+};
 
 export const clearAuthToken = () => {
   try {
-      console.log('clear auth token and user data in local storage')  
-      localStorage.removeItem('user');
-  } catch (e) {}
+    console.log('clear auth token and user data in local storage')  
+    localStorage.removeItem('user');
+  } catch (err) {
+      console.error('error clearing authToken', err);
+  }
 };
 

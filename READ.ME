@@ -1,15 +1,40 @@
-# Avybe Challenge, front end and backend portion
-
 ## Description
 
 A simple profile app that allows the user to add and edit their nickname
 As well as their profile picture
 The images are stored in AWS s3
 
+I built this to learn and demonstrate the use of API's in react,
+Building a backend server and database with mongoDB,
+Using AWS S3 storage for images, 
+Understanding the benefits of both local storag and redux store simutaneously,
+While both persist data and connect data from different points, 
+the main difference for me, 
+If a user refreshes, local storage will still keep the data there.
+While Redux store can hold different default values. 
+The app will run on a single command. I could have done it through npm scripts in package.json,
+However, I decided to incorporate a bash script to demonstrate a differnt way.
+Typically npm scripts would be enough, but it this app were scale up,
+and there were more pieces to run, a bash script may be more useful. 
+
+Next, I'd lke to dockerize the app, creating one container for it. 
+
+Issues to learn from and remember: 
+1. nickName wasn’t being read in local storage, wasn’t being read after refresh, 
+store was getting re-initialized 
+2. fileUpload issue, looked at what the error was, saw it was trying to render imageFile, 
+looked at application state, saw nickName had updated instead of imageFile in local storage. 
+trying to update two different files, but only updating nickName, 
+then had to create [key] to switch which would be updated, and since one was a string one was an object, (different data types). 
+I had to make a condition to check for it. 
+but then, saving imageFile in imageFile, (nested object), so I had to remove one of the nested objects
+
+
 ## Installation of dependencies and starting server and client
 
 Run command 
 $ npm run build
+
 
 ## Start up app without installing dependencies
 

@@ -9,13 +9,16 @@ function App() {
         <div className="container">
         <h1>Welcome to BookFace </h1>
             <Switch>
-                <Route
+                <Route 
                     exact
+                    path="/"
+                    component={SignupPage}
+                />
+                <Route
                     path="/login"
                     component={SignupPage}
                 />
                 <Route 
-                    exact
                     path="/user"
                     component={User}
                 />

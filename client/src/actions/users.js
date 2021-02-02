@@ -17,7 +17,7 @@ export const editName = nickName => {
 // EDIT STATE update image 
 export const EDIT_IMAGE = "EDIT_IMAGE";
 export const editImage = ({imageFile}) => {
-  console.log(imageFile)
+  console.log('HERE',imageFile)
   return {
     type: EDIT_IMAGE,
     imageFile
@@ -55,7 +55,7 @@ export const singleFileUploadRequest = (selectedFile, getState) => {
               console.log(fileName)
               dispatch(editImage(fileName))
               dispatch(updateUserSuccess(fileName))
-              updateUser(fileName)
+              updateUser(fileName.imageFile, "imageFile")
               alert('File Uploaded');
             }
           }

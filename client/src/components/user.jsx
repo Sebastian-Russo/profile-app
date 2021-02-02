@@ -25,9 +25,10 @@ class User extends Component {
     console.log(value)
     const { name } = value; 
     this.setState({ nickName: name })
+
+    // save nickName to store and local storage
     this.props.editName(name);
-    updateUser(name);
-    // updateNickName(name)
+    updateUser(name, "nickName");
   }
 
   // Make form input appear/disappear 
@@ -49,8 +50,8 @@ class User extends Component {
   }
 
   handleLogout = () => {
-    console.log('clicked logout')
     this.props.logOut()
+    this.props.history.push('/login')    
   }
 
   render() { 
@@ -117,7 +118,7 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('MAP', state)
+  // console.log('MAP', state)
   return {
     user: state.user,
     auth: state.auth
