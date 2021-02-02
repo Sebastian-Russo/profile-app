@@ -20,9 +20,13 @@ class UploadIMage extends Component {
   }
 
   singleFileUploadHandler = () => {
-      const { selectedFile } = this.state;
+      const {selectedFile} = this.state; 
       // API request to S3 storage 
-      this.props.singleFileUploadRequest(selectedFile)
+      if (selectedFile == null) {
+        alert("Please select picture before upload")
+      } else {
+        this.props.singleFileUploadRequest(selectedFile)
+      }
   }
 
   render() { 
