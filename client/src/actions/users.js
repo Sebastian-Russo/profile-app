@@ -17,7 +17,6 @@ export const editName = nickName => {
 // EDIT STATE update image 
 export const EDIT_IMAGE = "EDIT_IMAGE";
 export const editImage = ({imageFile}) => {
-  console.log('HERE',imageFile)
   return {
     type: EDIT_IMAGE,
     imageFile
@@ -53,9 +52,9 @@ export const singleFileUploadRequest = (selectedFile, getState) => {
               let fileName = res.data;
               // UPDATE STORE 
               console.log(fileName)
-              dispatch(editImage(fileName))
+              dispatch(editImage(fileName)) // update redux store
               dispatch(updateUserSuccess(fileName))
-              updateUser(fileName.imageFile, "imageFile")
+              updateUser(fileName.imageFile, "imageFile") // update local storage
               alert('File Uploaded');
             }
           }
@@ -81,9 +80,11 @@ export const updateUserError = error => ({
 })
 
 // "SAVE BUTTON" API call to mongoDB 
-export const updateUserRequest = () => (dispatch, getState, user) => {
+export const updateUserRequest = user => (dispatch, getState) => {
     const { auth } = getState();
+    // GRAB USER FROM REDUX STORE ?????????????????
     console.log('udateUserReq', user)
+
     fetch(`${API_BASE_URL}/users/${auth.id}`, {
         method: 'PUT',
         headers: {

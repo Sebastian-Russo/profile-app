@@ -3,10 +3,7 @@ import {
   CLEAR_AUTH,
   AUTH_REQUEST,
   AUTH_SUCCESS,
-  SET_AUTH_TOKEN,
-  // ADD_USER_PROFILE,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR
+  SET_AUTH_TOKEN
 } from "../actions/auth";
 
 const initialState = {
@@ -24,42 +21,39 @@ const initialState = {
 };
 
 export default function authReducer(state = initialState, action) {
-  let answer;
-  if (action.type === SET_AUTH_TOKEN) {
-    answer = Object.assign({}, state, {
-      authToken: action.authToken,
-    });
-    return answer;
-  } else if (action.type === CLEAR_AUTH) {
-    answer = Object.assign({}, state, {
-      authToken: null,
-      id: null,
-    });
-    return answer;
-  } else if (action.type === AUTH_REQUEST) {
-    answer = Object.assign({}, state, {
-      loading: true,
-      error: null,
-    });
-    return answer;
-  } else if (action.type === AUTH_SUCCESS) {
-    answer = Object.assign({}, state, {
-      loading: false,
-      authToken: action.authToken,
-      id: action.user.id,
-      email: action.user.email, 
-      username: action.user.username,
-      nickName: action.user.nickName,
-      imageFile: action.user.imageFile
-    });
-    return answer;
-  } else if (action.type === AUTH_ERROR) {
-    answer = Object.assign({}, state, {
-      loading: false,
-      error: action.error,
-    });
-    return answer;
+  switch (action.type) {
+    case SET_AUTH_TOKEN: 
+      return {
+        ...state,
+        authToken: action.authToken
+      };
+    case CLEAR_AUTH: 
+      return {
+        ...state,
+        authToken: null,
+        id: null
+      };
+    case AUTH_REQUEST:
+      return {
+        ...state,
+        error: null
+      };
+    case AUTH_SUCCESS:
+      return {
+        loading: false,
+        authToken: action.authToken,
+        id: action.user.id,
+        email: action.user.email, 
+        username: action.user.username,
+        nickName: action.user.nickName,
+        imageFile: action.user.imageFile
+      };
+    case AUTH_ERROR:
+      return {
+        error: action.error 
+      };
+    default: 
+      return state;
   }
-  
-  return state;
 }
+

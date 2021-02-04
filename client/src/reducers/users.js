@@ -29,41 +29,40 @@ import {
   };
   
   const userReducer = (state = initialState, action) => {
-    if (action.type === EDIT_NAME) {
-      console.log('USER REDUCER', action.type, action.nickName)
-      return {...state, 
+    switch (action.type) {
+      case EDIT_NAME: 
+        return {
+          ...state,
           nickName: action.nickName
-      }
-    }
-    if (action.type === EDIT_IMAGE) {
-      return Object.assign({}, state, {
+        };
+      case EDIT_IMAGE:
+        return {
+          ...state,
           imageFile: {
             imageName: action.imageFile.imageName,
             imageKey: action.imageFile.imageKey,
             imageUrl: action.imageFile.imageUrl
           }
-      })
+        };
+      case UPDATE_USER_SUCCESS:
+        return {
+          ...state,
+          nickName: action.nickName,
+          imageFile: {
+            imageUrl: action.user.imageFile.imageUrl,
+            imageName: action.user.imageFile.imageName,
+            imageKey: action.user.imageFile.imageKey
+          }
+        };
+      case UPDATE_USER_ERROR: 
+        return {
+          ...state,
+          loading: false,
+          error: action.error,
+        };
+      default:
+        return state;
     }
-
-    if (action.type === UPDATE_USER_SUCCESS) {
-      console.log('UPDATE USER SUCCESS', action)
-      return Object.assign({}, state, {
-        nickName: action.nickName,
-        imageFile: {
-          imageUrl: action.user.imageFile.imageUrl,
-          imageName: action.user.imageFile.imageName,
-          imageKey: action.user.imageFile.imageKey
-        }
-      })
-    }
-    if (action.type === UPDATE_USER_ERROR) {
-      return Object.assign({}, state, {
-        loading: false,
-        error: action.error,
-      });
-    }
-
-    return state;
   }
   
   export default userReducer;

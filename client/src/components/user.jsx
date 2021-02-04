@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import UserForm from './user-form';
 import { editName, editImage } from '../actions/users';
 import { updateUserRequest } from '../actions/users';
@@ -24,7 +24,7 @@ class User extends Component {
   submit = value => {
     console.log(value)
     const { name } = value; 
-    this.setState({ nickName: name })
+    this.setState({ nickName: name }) // set state to render 
 
     // save nickName to store and local storage
     this.props.editName(name);
@@ -46,6 +46,8 @@ class User extends Component {
       nickName: this.state.nickName,
       imageFile: this.state.image
     }
+    // ASYNC ACTION, USER NOT RECEIVING IMAGEFILE ***** IMAGE NEVER PUT IN STATE
+    console.log(user)
     this.props.updateUserRequest(user)
   }
 
