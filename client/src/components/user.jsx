@@ -20,15 +20,22 @@ class User extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({
+      nickName: this.props.user.nickName || "",
+      image: this.props.user.imageFile || ""
+    })
+  }
+
   // Input form for name 
   submit = value => {
     console.log(value)
     const { name } = value; 
     this.setState({ nickName: name }) // set state to render 
-
-    // save nickName to store and local storage
+    // save nickName to redux store 
     this.props.editName(name);
-    updateUser(name, "nickName");
+    // save nickName to local storage
+    updateUser({ nickName: name });
   }
 
   // Make form input appear/disappear 
@@ -41,13 +48,12 @@ class User extends Component {
     this.setState({ editImageClicked: !this.state.editImageClicked })
   }
 
+  // saves nickName and image to DB
   handleSaveClick = () => {
     const user = {
       nickName: this.state.nickName,
       imageFile: this.state.image
     }
-    // ASYNC ACTION, USER NOT RECEIVING IMAGEFILE ***** IMAGE NEVER PUT IN STATE
-    console.log(user)
     this.props.updateUserRequest(user)
   }
 
@@ -57,6 +63,9 @@ class User extends Component {
   }
 
   render() { 
+    // clean up duplicated data user/auth reducers 
+    // console.log(this.props.user)
+    // console.log(this.props.auth)
 
     const { username, nickName } = this.props.auth;
 

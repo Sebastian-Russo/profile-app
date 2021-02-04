@@ -54,7 +54,7 @@ export const singleFileUploadRequest = (selectedFile, getState) => {
               console.log(fileName)
               dispatch(editImage(fileName)) // update redux store
               dispatch(updateUserSuccess(fileName))
-              updateUser(fileName.imageFile, "imageFile") // update local storage
+              updateUser({imageFile: fileName.imageFile}) // update local storage
               alert('File Uploaded');
             }
           }
@@ -68,7 +68,7 @@ export const singleFileUploadRequest = (selectedFile, getState) => {
 
 
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const updateUserSuccess = ( user ) => ({
+export const updateUserSuccess = user => ({
     type: UPDATE_USER_SUCCESS,
     user
 })
@@ -82,31 +82,31 @@ export const updateUserError = error => ({
 // "SAVE BUTTON" API call to mongoDB 
 export const updateUserRequest = user => (dispatch, getState) => {
     const { auth } = getState();
-    // GRAB USER FROM REDUX STORE ?????????????????
-    console.log('udateUserReq', user)
-
+    let data = {
+      id: auth.id,
+      nickName: user.nickName,
+      imageFile: {
+        imageKey: user.imageFile.imageKey,
+        imageUrl: user.imageFile.imageUrl
+      }
+    }
     fetch(`${API_BASE_URL}/users/${auth.id}`, {
         method: 'PUT',
         headers: {
             Authorization: `Bearer ${auth.authToken}`,
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            id: auth.id,
-            nickName: user.nickName,
-            imageFile: {
-              imageKey: user.imageFile.imageKey,
-              imageUrl: user.imageFile.imageUrl
-            }
-        })
+        body: JSON.stringify(data)
     })  
-    .then(res => res.json())  
-    .then(json => {
-      console.log('FIRE OFF UPDATE USER SUCCESS', json)
-        dispatch(updateUserSuccess(json))
-        dispatch(updateUser(json))
+    .then(res => res.json())
+    .then (data => {
+      // const data = JSON.parse(json)
+      console.log('FIRE OFF UPDATE USER SUCCESS', data)
+        dispatch(updateUserSuccess(data)) // redux store
+        updateUser(data) // local storage
     })
     .catch(err => {
+        console.log(err)
         dispatch(updateUserError(err))
     });
 };

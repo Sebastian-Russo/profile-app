@@ -40,6 +40,7 @@ export default function authReducer(state = initialState, action) {
       };
     case AUTH_SUCCESS:
       return {
+        ...state,
         loading: false,
         authToken: action.authToken,
         id: action.user.id,
@@ -50,6 +51,7 @@ export default function authReducer(state = initialState, action) {
       };
     case AUTH_ERROR:
       return {
+        ...state,
         error: action.error 
       };
     default: 

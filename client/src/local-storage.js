@@ -19,20 +19,22 @@ export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) 
   }
 };
       // 2nd arg, either nickName or imageFile 
-export const updateUser = (updateUserObj, key) => {
-try {
-  const userJSON = localStorage.getItem('user');
-  const currentUserObj = JSON.parse(userJSON);
-  localStorage.setItem('user', JSON.stringify(
-    Object.assign({}, currentUserObj, {
-      [key]: key === "nickName" ? updateUserObj : {...updateUserObj}
-    }))
-  );
-} catch (err) {
+export const updateUser = (updateUserObj) => {
+  console.log('SAVE CLICK', updateUserObj)
+
+  try {
+    const userJSON = localStorage.getItem('user');
+    const currentUserObj = JSON.parse(userJSON);
+    localStorage.setItem('user', JSON.stringify(
+      {...currentUserObj, // copy current obj
+      ...updateUserObj, // replace with updated obj, either nickName, imageFile, or both
+      }
+    ));
+  } catch (err) {
     console.error('error updating user in local storage', err);
   }
 };
-
+  
 export const clearAuthToken = () => {
   try {
     console.log('clear auth token and user data in local storage')  

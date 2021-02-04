@@ -32,8 +32,8 @@ import {
     switch (action.type) {
       case EDIT_NAME: 
         return {
-          ...state,
-          nickName: action.nickName
+          ...state, // copy current state obj
+          nickName: action.nickName // overwrite part of state
         };
       case EDIT_IMAGE:
         return {
@@ -47,10 +47,9 @@ import {
       case UPDATE_USER_SUCCESS:
         return {
           ...state,
-          nickName: action.nickName,
+          nickName: action.user.nickName,
           imageFile: {
             imageUrl: action.user.imageFile.imageUrl,
-            imageName: action.user.imageFile.imageName,
             imageKey: action.user.imageFile.imageKey
           }
         };

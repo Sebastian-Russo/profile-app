@@ -135,20 +135,23 @@ router.put('/:id', jwtAuth, (req, res) => {
   }
 
   const toUpdate = {};
-  const updateableFields = ["nickName", "image"];
+  const updateableFields = ["nickName", "imageFile"];
 
   updateableFields.forEach(field => {
+    console.log('FIELDS', field)
       if (field in req.body) {
           toUpdate[field] = req.body[field]
       }
   });
-
+  console.log('TO UPDATE OBJ:', toUpdate)
   User
+      // name type string, image type obj 
       .findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true})
       .then(updateUser => {
-          res.status(204).json({
+        console.log('UPDATE USER RES:', updateUser)
+          res.status(200).json({
               nickName: updateUser.nickName,
-              image: updateUser.imageFile
+              imageFile: updateUser.imageFile
           })
       })
       .catch(err => res.status(500).json({ message: err.message }));
