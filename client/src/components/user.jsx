@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { Redirect } from 'react-router-dom';
 import UserForm from './user-form';
 import { editName, editImage } from '../actions/users';
 import { updateUserRequest } from '../actions/users';
@@ -38,12 +37,12 @@ class User extends Component {
     updateUser({ nickName: name });
   }
 
-  // Make form input appear/disappear 
+  // Toggle form input
   handleNameClick = () => {
     this.setState({ editNameClicked: !this.state.editNameClicked })
   }
 
-  // Make UploadImage appear/disappear
+  // Toggle UploadImage
   handleImageClick = () => {
     this.setState({ editImageClicked: !this.state.editImageClicked })
   }
@@ -63,37 +62,25 @@ class User extends Component {
   }
 
   render() { 
-    // clean up duplicated data user/auth reducers 
-    // console.log(this.props.user)
-    // console.log(this.props.auth)
-
-    const { username, nickName } = this.props.auth;
-
-    let nickNamePlaceHolder
-    if (this.props.user.nickName) {
-      nickNamePlaceHolder = this.props.user.nickName;
-    } else {
-      nickNamePlaceHolder = nickName;
-    }
+    const { username, id} = this.props.auth;
+    const { nickName, imageFile } = this.props.user;
+    const { editNameClicked, editImageClicked } = this.state;
 
     const userProfile = (
       <div>
         <h3>Username: {username}</h3>
-        <h5>Nick Name: {nickNamePlaceHolder}</h5>
+        <h5>Nick Name: {nickName}</h5>
       </div>      
     )
 
-    const { id  } = this.props.user; 
-
     let changeName;
-    if (this.state.editNameClicked) {
+    if (editNameClicked) {
       changeName = <UserForm onSubmit={this.submit} />
     }
     let changeImage;
-    if (this.state.editImageClicked) {
+    if (editImageClicked) {
       changeImage = <UploadImage />
     }
-    
 
     return ( 
       <div className="container">
@@ -104,7 +91,7 @@ class User extends Component {
             onClick={() => this.handleNameClick(id)}
             >Add/Edit Name</button>
         <div width="50%" height="50%" >
-            <img src={this.props.user.imageFile.imageUrl} alt="profile" width="300px"/>
+            <img src={imageFile.imageUrl} alt="profile" width="300px"/>
         </div>
         <button 
             className="btn btn-secondary" 
@@ -129,7 +116,6 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log('MAP', state)
   return {
     user: state.user,
     auth: state.auth

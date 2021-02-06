@@ -100,8 +100,6 @@ export const updateUserRequest = user => (dispatch, getState) => {
     })  
     .then(res => res.json())
     .then (data => {
-      // const data = JSON.parse(json)
-      console.log('FIRE OFF UPDATE USER SUCCESS', data)
         dispatch(updateUserSuccess(data)) // redux store
         updateUser(data) // local storage
     })
@@ -110,7 +108,6 @@ export const updateUserRequest = user => (dispatch, getState) => {
         dispatch(updateUserError(err))
     });
 };
-
 
 export const registerUser = user => dispatch => {
     console.log(user)

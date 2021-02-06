@@ -20,8 +20,6 @@ export const saveAuthToken = (authToken, { id, username, nickName, imageFile }) 
 };
       // 2nd arg, either nickName or imageFile 
 export const updateUser = (updateUserObj) => {
-  console.log('SAVE CLICK', updateUserObj)
-
   try {
     const userJSON = localStorage.getItem('user');
     const currentUserObj = JSON.parse(userJSON);

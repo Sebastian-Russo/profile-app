@@ -53,16 +53,10 @@ class UploadIMage extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    image: state.image
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
       singleFileUploadRequest
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadIMage);
+export default connect(null, mapDispatchToProps)(UploadIMage);

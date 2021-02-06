@@ -12,12 +12,7 @@ const initialState = {
   loading: false,
   username: "",
   email: null,
-  authToken: null, 
-  nickName: "Please add a nick name",
-  imageFile: {
-    imageUrl: "",
-    imageKey: ""
-  }
+  authToken: null
 };
 
 export default function authReducer(state = initialState, action) {
@@ -44,10 +39,8 @@ export default function authReducer(state = initialState, action) {
         loading: false,
         authToken: action.authToken,
         id: action.user.id,
-        email: action.user.email, 
         username: action.user.username,
-        nickName: action.user.nickName,
-        imageFile: action.user.imageFile
+        email: action.user.emails
       };
     case AUTH_ERROR:
       return {

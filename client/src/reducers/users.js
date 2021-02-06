@@ -1,4 +1,3 @@
-import { useStore } from "react-redux";
 import {
   EDIT_NAME,
   EDIT_IMAGE,
@@ -9,11 +8,6 @@ import {
   const initialState = {
     error: null,
     loading: false,
-
-    id: null, 
-    username: "",
-    email: null,
-    authToken: null, 
 
     // saving user as string in local storage, stringify, parse to change back into obj
     // attempting to get user nickName from local storage, other wise, default to string "please..."
