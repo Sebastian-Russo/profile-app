@@ -9,7 +9,6 @@
     "client": "cd client && npm start",
     "start": "concurrently \"npm run dev\" \"npm run client\" ",
     "go": "chmod +x ./build.sh && ./build.sh",
-    "build": "react-scripts build"
   },
   "author": "",
   "license": "ISC",
