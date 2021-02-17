@@ -40,7 +40,6 @@ const storeAuthInfo = (authToken, dispatch) => {
 };
 
 export const login = (username, password) => (dispatch) => {
-  console.log("logging in with", username, password);
   return fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -73,7 +72,6 @@ export const login = (username, password) => (dispatch) => {
 
 export const refreshAuthToken = () => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
-  console.log("refreshing", authToken);
   return fetch(`${API_BASE_URL}/auth/refresh`, {
     method: "POST",
     headers: {

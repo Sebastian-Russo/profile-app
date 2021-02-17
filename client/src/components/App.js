@@ -2,11 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import User from './user';
 import SignupPage from './signup-page';
+import './App.css';
 
 function App() {
   return (
     <Router>
-        <div className="container">
+        <div className="container app">
         <h1>Welcome to BookFace </h1>
             <Switch>
                 <Route 

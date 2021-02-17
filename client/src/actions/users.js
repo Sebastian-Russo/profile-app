@@ -27,7 +27,6 @@ export const editImage = ({imageFile}) => {
 export const singleFileUploadRequest = (selectedFile, getState) => {
     const data = new FormData();
     data.append('image', selectedFile, selectedFile.name);
-    console.log('image', selectedFile, selectedFile.name)
     return (dispatch, getState) => {
       const {auth} = getState();
       return  Axios.post( `${API_BASE_URL}/user/image`, data, {
@@ -110,7 +109,6 @@ export const updateUserRequest = user => (dispatch, getState) => {
 };
 
 export const registerUser = user => dispatch => {
-    console.log(user)
     return fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {
